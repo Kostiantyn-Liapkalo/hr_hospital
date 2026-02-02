@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_doctor_house" model="hr.hospital.doctor">
+        <field name="name">Dr. House</field>
+        <field name="specialization">Diagnostician</field>
+    </record>
+    <record id="demo_doctor_watson" model="hr.hospital.doctor">
+        <field name="name">Dr. Watson</field>
+        <field name="specialization">Surgeon</field>
+    </record>
+    <record id="demo_doctor_strange" model="hr.hospital.doctor">
+        <field name="name">Dr. Strange</field>
+        <field name="specialization">Neurosurgeon</field>
+    </record>
+</odoo>

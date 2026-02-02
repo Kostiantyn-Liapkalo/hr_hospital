@@ -1,0 +1,25 @@
+{
+    'name': 'Hospital Automation',
+    'summary': 'Manage doctors, patients, diseases and visits',
+    'author': 'Kostiantyn Liapkalo',
+    'website': 'https://github.com/kostiantyn-liapkalo',
+    'category': 'Human Resources',
+    'version': '19.0.1.0.0',
+    'depends': ['base'],
+    'data': [
+        'security/ir.model.access.csv',
+        'views/doctor_views.xml',
+        'views/patient_views.xml',
+        'views/disease_views.xml',
+        'views/visit_views.xml',
+        'views/hr_hospital_menus.xml',
+        'data/disease_data.xml',
+    ],
+    'demo': [
+        'demo/doctor_demo.xml',
+        'demo/patient_demo.xml',
+    ],
+    'installable': True,
+    'application': True,
+    'license': 'LGPL-3',
+}

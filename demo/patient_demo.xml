@@ -1,0 +1,18 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <record id="demo_patient_john" model="hr.hospital.patient">
+        <field name="name">John Doe</field>
+        <field name="age">30</field>
+        <field name="doctor_id" ref="hr_hospital.demo_doctor_house"/>
+    </record>
+    <record id="demo_patient_jane" model="hr.hospital.patient">
+        <field name="name">Jane Smith</field>
+        <field name="age">25</field>
+        <field name="doctor_id" ref="hr_hospital.demo_doctor_watson"/>
+    </record>
+    <record id="demo_patient_bob" model="hr.hospital.patient">
+        <field name="name">Bob Brown</field>
+        <field name="age">45</field>
+        <field name="doctor_id" ref="hr_hospital.demo_doctor_strange"/>
+    </record>
+</odoo>
