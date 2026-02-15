@@ -1,0 +1,34 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <record id="speciality_cardiology" model="hr.hospital.doctor.speciality">
+            <field name="name">Cardiology</field>
+            <field name="code">CARD</field>
+            <field name="description">Diagnosis and treatment of heart and vascular diseases.</field>
+        </record>
+
+        <record id="speciality_neurology" model="hr.hospital.doctor.speciality">
+            <field name="name">Neurology</field>
+            <field name="code">NEUR</field>
+            <field name="description">Treatment of disorders of the nervous system.</field>
+        </record>
+
+        <record id="speciality_pediatrics" model="hr.hospital.doctor.speciality">
+            <field name="name">Pediatrics</field>
+            <field name="code">PED</field>
+            <field name="description">Medical care for infants, children, and adolescents.</field>
+        </record>
+
+        <record id="speciality_orthopedics" model="hr.hospital.doctor.speciality">
+            <field name="name">Orthopedics</field>
+            <field name="code">ORTH</field>
+            <field name="description">Diagnosis and treatment of musculoskeletal system disorders.</field>
+        </record>
+
+        <record id="speciality_dermatology" model="hr.hospital.doctor.speciality">
+            <field name="name">Dermatology</field>
+            <field name="code">DERM</field>
+            <field name="description">Treatment of diseases related to skin, hair, and nails.</field>
+        </record>
+    </data>
+</odoo>

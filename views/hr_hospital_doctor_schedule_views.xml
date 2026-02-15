@@ -1,0 +1,121 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Doctor Schedule Views -->
+    
+    <!-- List View -->
+    <record id="view_hr_hospital_doctor_schedule_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.schedule.tree</field>
+        <field name="model">hr.hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <list string="Doctor Schedules">
+                <field name="doctor_id" string="Doctor"/>
+                <field name="day_of_week" string="Day"/>
+                <field name="specific_date" string="Date"/>
+                <field name="start_time" string="Start"/>
+                <field name="end_time" string="End"/>
+                <field name="duration" string="Duration"/>
+                <field name="schedule_type" string="Type"/>
+                <field name="notes" string="Notes"/>
+                <field name="active" invisible="1"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_doctor_schedule_form" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.schedule.form</field>
+        <field name="model">hr.hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <form string="Doctor Schedule">
+                <sheet>
+                    <group>
+                        <group string="Basic Information">
+                            <field name="doctor_id" required="1"/>
+                            <field name="schedule_type" required="1"/>
+                            <field name="active"/>
+                        </group>
+                        <group string="Schedule Details">
+                            <field name="day_of_week" 
+                                   attrs="{'invisible': [('specific_date', '!=', False)]}"
+                                   required="1"/>
+                            <field name="specific_date" 
+                                   attrs="{'invisible': [('day_of_week', '!=', False)]}"
+                                   string="Specific Date"/>
+                            <field name="start_time" required="1"/>
+                            <field name="end_time" required="1"/>
+                            <field name="duration" readonly="1"/>
+                        </group>
+                        <group string="Additional Information">
+                            <field name="notes" placeholder="Additional notes..."/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Calendar View -->
+    <record id="view_hr_hospital_doctor_schedule_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.schedule.calendar</field>
+        <field name="model">hr.hospital.doctor.schedule</field>
+        <field name="priority">2</field>
+        <field name="arch" type="xml">
+            <calendar string="Doctor Schedule Calendar" 
+                     date_start="start_time" 
+                     date_stop="end_time"
+                     mode="month"
+                     color="schedule_type">
+                <field name="doctor_id"/>
+                <field name="schedule_type"/>
+                <field name="notes"/>
+                <field name="specific_date"/>
+            </calendar>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_hospital_doctor_schedule_search" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.schedule.search</field>
+        <field name="model">hr.hospital.doctor.schedule</field>
+        <field name="arch" type="xml">
+            <search string="Doctor Schedule Search">
+                <field name="doctor_id"/>
+                <field name="day_of_week"/>
+                <field name="specific_date"/>
+                <field name="schedule_type"/>
+                <field name="notes"/>
+                <filter string="Work Days" name="work_days" domain="[('schedule_type', '=', 'work')]"/>
+                <filter string="Vacation" name="vacation" domain="[('schedule_type', '=', 'vacation')]"/>
+                <filter string="Sick Leave" name="sick_leave" domain="[('schedule_type', '=', 'sick_leave')]"/>
+                <filter string="Conference" name="conference" domain="[('schedule_type', '=', 'conference')]"/>
+                <filter string="Training" name="training" domain="[('schedule_type', '=', 'training')]"/>
+                <separator/>
+                <filter string="This Week" name="this_week" domain="[('specific_date', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d')), ('specific_date', '&lt;', (context_today() + datetime.timedelta(days=7-context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                <filter string="Next 7 Days" name="next_7_days" domain="[('specific_date', '>=', context_today().strftime('%Y-%m-%d')), ('specific_date', '&lt;', (context_today() + datetime.timedelta(days=7)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <group string="Doctor">
+                        <field name="doctor_id"/>
+                    </group>
+                    <group string="Schedule Type">
+                        <field name="schedule_type"/>
+                    </group>
+                    <group string="Day of Week">
+                        <field name="day_of_week"/>
+                    </group>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_doctor_schedule" model="ir.actions.act_window">
+        <field name="name">Doctor Schedules</field>
+        <field name="res_model">hr.hospital.doctor.schedule</field>
+        <field name="view_mode">tree,form,calendar</field>
+        <field name="view_id" ref="view_hr_hospital_doctor_schedule_tree"/>
+        <field name="search_view_id" ref="view_hr_hospital_doctor_schedule_search"/>
+        <field name="calendar_view_id" ref="view_hr_hospital_doctor_schedule_calendar"/>
+        <field name="help">Manage doctor work schedules and availability</field>
+    </record>
+
+</odoo>

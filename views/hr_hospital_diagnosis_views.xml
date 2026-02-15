@@ -1,0 +1,151 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Diagnosis Views -->
+    
+    <!-- List View -->
+    <record id="view_hr_hospital_diagnosis_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.diagnosis.tree</field>
+        <field name="model">hr.hospital.diagnosis</field>
+        <field name="arch" type="xml">
+            <list string="Diagnoses">
+                <field name="name" string="Reference"/>
+                <field name="visit_id" string="Visit"/>
+                <field name="patient_id" string="Patient" related="visit_id.patient_id"/>
+                <field name="doctor_id" string="Doctor" related="visit_id.doctor_id"/>
+                <field name="disease_id" string="Disease"/>
+                <field name="severity" string="Severity"/>
+                <field name="diagnosis_date" string="Date"/>
+                <field name="is_approved" string="Approved"/>
+                <field name="approved_doctor_id" string="Approved By"/>
+                <field name="approval_date" string="Approval Date"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_diagnosis_form" model="ir.ui.view">
+        <field name="name">hr.hospital.diagnosis.form</field>
+        <field name="model">hr.hospital.diagnosis</field>
+        <field name="arch" type="xml">
+            <form string="Medical Diagnosis">
+                <sheet>
+                    <group>
+                        <group string="Basic Information">
+                            <field name="name" readonly="1"/>
+                            <field name="visit_id" required="1"/>
+                            <field name="disease_id" required="1"/>
+                            <field name="diagnosis_date" required="1"/>
+                            <field name="severity" required="1"/>
+                        </group>
+                        <group string="Diagnosis Details">
+                            <field name="description" required="1" placeholder="Describe the diagnosis..."/>
+                            <field name="prescribed_treatment" placeholder="Treatment plan and recommendations..."/>
+                        </group>
+                        <group string="Approval Information">
+                            <field name="is_approved"/>
+                            <field name="approved_doctor_id" readonly="1" attrs="{'readonly': [('is_approved', '=', False)]}"/>
+                            <field name="approval_date" readonly="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <chatter/>
+            </form>
+        </field>
+    </record>
+
+    <!-- Kanban View -->
+    <record id="view_hr_hospital_diagnosis_kanban" model="ir.ui.view">
+        <field name="name">hr.hospital.diagnosis.kanban</field>
+        <field name="model">hr.hospital.diagnosis</field>
+        <field name="arch" type="xml">
+            <kanban string="Diagnoses">
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="severity"/>
+                <field name="diagnosis_date"/>
+                <field name="is_approved"/>
+                <templates>
+                    <t t-name="kanban-box">
+                        <div t-attf-class="oe_kanban_card oe_kanban_global_color">
+                            <div class="oe_kanban_content">
+                                <div class="oe_kanban_title">
+                                    <strong><field name="patient_id"/></strong>
+                                    <div class="oe_kanban_subtitle">
+                                        <field name="disease_id"/>
+                                    </div>
+                                </div>
+                                <div class="oe_kanban_bottom">
+                                    <div class="oe_kanban_left">
+                                        <span t-esc="field.name"/>
+                                    </div>
+                                    <div class="oe_kanban_right">
+                                        <span class="oe_tag" t-attf-class="{'oe_green': record.is_approved.raw_value, 'oe_red': !record.is_approved.raw_value}">
+                                            <t t-if="record.is_approved.raw_value">Approved</t>
+                                            <t t-if="!record.is_approved.raw_value">Pending</t>
+                                        </span>
+                                    </div>
+                                </div>
+                            </div>
+                        </div>
+                    </t>
+                </templates>
+            </kanban>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_hospital_diagnosis_search" model="ir.ui.view">
+        <field name="name">hr.hospital.diagnosis.search</field>
+        <field name="model">hr.hospital.diagnosis</field>
+        <field name="arch" type="xml">
+            <search string="Diagnosis Search">
+                <field name="visit_id"/>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="disease_id"/>
+                <field name="severity"/>
+                <field name="diagnosis_date"/>
+                <field name="is_approved"/>
+                <field name="approved_doctor_id"/>
+                <filter string="Approved Diagnoses" name="approved" domain="[('is_approved', '=', True)]"/>
+                <filter string="Pending Approval" name="pending" domain="[('is_approved', '=', False)]"/>
+                <filter string="My Diagnoses" name="my_diagnoses" domain="[('doctor_id.user_id', '=', uid)]"/>
+                <separator/>
+                <filter string="Today" name="today" domain="[('diagnosis_date', '>=', context_today().strftime('%Y-%m-%d'))]"/>
+                <filter string="This Week" name="this_week" domain="[('diagnosis_date', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
+                <filter string="This Month" name="this_month" domain="[('diagnosis_date', '>=', (context_today() - relativedelta(months=-1)).strftime('%Y-%m-%d'))]"/>
+                <filter string="Last 30 Days" name="last_30_days" domain="[('diagnosis_date', '>=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
+                <group expand="0" string="Group By">
+                    <group string="Patient">
+                        <field name="patient_id"/>
+                    </group>
+                    <group string="Doctor">
+                        <field name="doctor_id"/>
+                    </group>
+                    <group string="Disease">
+                        <field name="disease_id"/>
+                    </group>
+                    <group string="Severity">
+                        <field name="severity"/>
+                    </group>
+                    <group string="Approval Status">
+                        <field name="is_approved"/>
+                    </group>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_diagnosis" model="ir.actions.act_window">
+        <field name="name">Medical Diagnoses</field>
+        <field name="res_model">hr.hospital.diagnosis</field>
+        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_id" ref="view_hr_hospital_diagnosis_tree"/>
+        <field name="kanban_view_id" ref="view_hr_hospital_diagnosis_kanban"/>
+        <field name="search_view_id" ref="view_hr_hospital_diagnosis_search"/>
+        <field name="help">Manage medical diagnoses and treatments</field>
+    </record>
+
+</odoo>

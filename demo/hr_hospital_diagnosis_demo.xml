@@ -1,0 +1,99 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Diagnosis Demo Data -->
+        <record id="diagnosis_flu" model="hr.hospital.diagnosis">
+            <field name="name">DIAG001</field>
+            <field name="visit_id" ref="demo_visit_1"/>
+            <field name="disease_id" ref="disease_influenza"/>
+            <field name="description">Patient presents with typical influenza symptoms including fever, cough, and body aches.</field>
+            <field name="prescribed_treatment"><![CDATA[
+                <p>Prescribed treatment:</p>
+                <ul>
+                    <li>Rest and hydration</li>
+                    <li>Antipyretics for fever</li>
+                    <li>Symptomatic relief</li>
+                </ul>
+            ]]></field>
+            <field name="severity">moderate</field>
+            <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=5)"/>
+            <field name="is_approved">True</field>
+        </record>
+        
+        <record id="diagnosis_hypertension" model="hr.hospital.diagnosis">
+            <field name="name">DIAG002</field>
+            <field name="visit_id" ref="demo_visit_2"/>
+            <field name="disease_id" ref="disease_hypertension"/>
+            <field name="description">Patient diagnosed with essential hypertension, stage 1.</field>
+            <field name="prescribed_treatment"><![CDATA[
+                <p>Treatment plan:</p>
+                <ul>
+                    <li>ACE inhibitors</li>
+                    <li>Dietary modifications</li>
+                    <li>Regular exercise</li>
+                    <li>Monthly follow-up</li>
+                </ul>
+            ]]></field>
+            <field name="severity">moderate</field>
+            <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=10)"/>
+            <field name="is_approved">True</field>
+        </record>
+        
+        <record id="diagnosis_fracture" model="hr.hospital.diagnosis">
+            <field name="name">DIAG003</field>
+            <field name="visit_id" ref="demo_visit_3"/>
+            <field name="disease_id" ref="disease_fracture"/>
+            <field name="description">Patient with closed fracture of the right radius.</field>
+            <field name="prescribed_treatment"><![CDATA[
+                <p>Emergency treatment:</p>
+                <ul>
+                    <li>Closed reduction</li>
+                    <li>Cast immobilization</li>
+                    <li>Pain management</li>
+                    <li>Orthopedic follow-up in 1 week</li>
+                </ul>
+            ]]></field>
+            <field name="severity">severe</field>
+            <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=2)"/>
+            <field name="is_approved">True</field>
+        </record>
+        
+        <record id="diagnosis_allergy" model="hr.hospital.diagnosis">
+            <field name="name">DIAG004</field>
+            <field name="visit_id" ref="demo_visit_4"/>
+            <field name="disease_id" ref="disease_allergy"/>
+            <field name="description">Patient presents with allergic rhinitis, likely due to pollen allergy.</field>
+            <field name="prescribed_treatment"><![CDATA[
+                <p>Allergy management:</p>
+                <ul>
+                    <li>Antihistamines</li>
+                    <li>Nasal corticosteroids</li>
+                    <li>Allergen avoidance</li>
+                    <li>Allergy testing recommended</li>
+                </ul>
+            ]]></field>
+            <field name="severity">mild</field>
+            <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=7)"/>
+            <field name="is_approved">True</field>
+        </record>
+        
+        <!-- Unapproved diagnosis from intern -->
+        <record id="diagnosis_intern_unapproved" model="hr.hospital.diagnosis">
+            <field name="name">DIAG005</field>
+            <field name="visit_id" ref="demo_visit_5"/>
+            <field name="disease_id" ref="disease_gastritis"/>
+            <field name="description">Patient with symptoms of acute gastritis.</field>
+            <field name="prescribed_treatment"><![CDATA[
+                <p>Initial treatment:</p>
+                <ul>
+                    <li>Proton pump inhibitors</li>
+                    <li>Dietary modifications</li>
+                    <li>Avoid irritants</li>
+                </ul>
+            ]]></field>
+            <field name="severity">mild</field>
+            <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=1)"/>
+            <field name="is_approved">False</field>
+        </record>
+    </data>
+</odoo>

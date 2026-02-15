@@ -1,0 +1,112 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Abstract Person Views (for inheritance demonstration) -->
+    
+    <!-- List View -->
+    <record id="view_hr_hospital_abstract_person_tree" model="ir.ui.view">
+        <field name="name">hr.hospital.abstract.person.tree</field>
+        <field name="model">hr.hospital.abstract.person</field>
+        <field name="arch" type="xml">
+            <list string="Abstract Persons">
+                <field name="full_name" string="Full Name"/>
+                <field name="phone" string="Phone"/>
+                <field name="email" string="Email"/>
+                <field name="gender" string="Gender"/>
+                <field name="birth_date" string="Birth Date"/>
+                <field name="age" string="Age"/>
+                <field name="country_id" string="Country"/>
+                <field name="lang_id" string="Language"/>
+            </list>
+        </field>
+    </record>
+
+    <!-- Form View -->
+    <record id="view_hr_hospital_abstract_person_form" model="ir.ui.view">
+        <field name="name">hr.hospital.abstract.person.form</field>
+        <field name="model">hr.hospital.abstract.person</field>
+        <field name="arch" type="xml">
+            <form string="Abstract Person">
+                <sheet>
+                    <group>
+                        <group string="Name Information">
+                            <field name="first_name" required="1"/>
+                            <field name="last_name" required="1"/>
+                            <field name="middle_name"/>
+                            <field name="full_name" readonly="1"/>
+                        </group>
+                        <group string="Personal Information">
+                            <field name="birth_date"/>
+                            <field name="age" readonly="1"/>
+                            <field name="gender"/>
+                        </group>
+                        <group string="Contact Information">
+                            <field name="phone" placeholder="+380XXXXXXXXX"/>
+                            <field name="email" placeholder="email@example.com"/>
+                        </group>
+                        <group string="Location Information">
+                            <field name="country_id"/>
+                            <field name="lang_id"/>
+                        </group>
+                    </group>
+                </sheet>
+            </form>
+        </field>
+    </record>
+
+    <!-- Search View -->
+    <record id="view_hr_hospital_abstract_person_search" model="ir.ui.view">
+        <field name="name">hr.hospital.abstract.person.search</field>
+        <field name="model">hr.hospital.abstract.person</field>
+        <field name="arch" type="xml">
+            <search string="Abstract Person Search">
+                <field name="first_name"/>
+                <field name="last_name"/>
+                <field name="middle_name"/>
+                <field name="full_name"/>
+                <field name="phone"/>
+                <field name="email"/>
+                <field name="gender"/>
+                <field name="birth_date"/>
+                <field name="age"/>
+                <field name="country_id"/>
+                <field name="lang_id"/>
+                <filter string="Male" name="male" domain="[('gender', '=', 'male')]"/>
+                <filter string="Female" name="female" domain="[('gender', '=', 'female')]"/>
+                <filter string="Other Gender" name="other" domain="[('gender', '=', 'other')]"/>
+                <separator/>
+                <filter string="Minors" name="minors" domain="[('age', '&lt;', 18)]"/>
+                <filter string="Adults" name="adults" domain="[('age', '>=', 18)]"/>
+                <filter string="Seniors" name="seniors" domain="[('age', '>=', 65)]"/>
+                <separator/>
+                <filter string="With Phone" name="with_phone" domain="[('phone', '!=', False)]"/>
+                <filter string="With Email" name="with_email" domain="[('email', '!=', False)]"/>
+                <filter string="Complete Contact Info" name="complete_contact" domain="[('phone', '!=', False), ('email', '!=', False)]"/>
+                <group expand="0" string="Group By">
+                    <group string="Gender">
+                        <field name="gender"/>
+                    </group>
+                    <group string="Country">
+                        <field name="country_id"/>
+                    </group>
+                    <group string="Language">
+                        <field name="lang_id"/>
+                    </group>
+                    <group string="Age Range">
+                        <field name="age" interval="10"/>
+                    </group>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <!-- Action -->
+    <record id="action_hr_hospital_abstract_person" model="ir.actions.act_window">
+        <field name="name">Abstract Persons</field>
+        <field name="res_model">hr.hospital.abstract.person</field>
+        <field name="view_mode">tree,form</field>
+        <field name="view_id" ref="view_hr_hospital_abstract_person_tree"/>
+        <field name="search_view_id" ref="view_hr_hospital_abstract_person_search"/>
+        <field name="help">Abstract person model for inheritance demonstration</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,181 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <!-- Mass Reassign Doctor Wizard -->
+    <record id="view_hr_hospital_mass_reassign_doctor_wizard_form" model="ir.ui.view">
+        <field name="name">hr.hospital.mass.reassign.doctor.wizard.form</field>
+        <field name="model">hr.hospital.mass.reassign.doctor.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Mass Reassign Doctor">
+                <group>
+                    <field name="old_doctor_id" readonly="1"/>
+                    <field name="new_doctor_id" required="1"/>
+                    <field name="patient_ids" widget="many2many_tags" required="1"/>
+                    <field name="change_date" required="1"/>
+                    <field name="reason" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_mass_reassign" string="Reassign" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_mass_reassign_doctor_wizard" model="ir.actions.act_window">
+        <field name="name">Mass Reassign Doctor</field>
+        <field name="res_model">hr.hospital.mass.reassign.doctor.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Disease Report Wizard -->
+    <record id="view_hr_hospital_disease_report_wizard_form" model="ir.ui.view">
+        <field name="name">hr.hospital.disease.report.wizard.form</field>
+        <field name="model">hr.hospital.disease.report.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Disease Report">
+                <sheet>
+                    <group>
+                        <group string="Filters">
+                            <field name="doctor_ids" widget="many2many_tags"/>
+                            <field name="disease_ids" widget="many2many_tags"/>
+                            <field name="country_ids" widget="many2many_tags"/>
+                        </group>
+                        <group string="Date Range">
+                            <field name="start_date" required="1"/>
+                            <field name="end_date" required="1"/>
+                        </group>
+                        <group string="Report Options">
+                            <field name="report_type" required="1"/>
+                            <field name="group_by" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_disease_report_wizard" model="ir.actions.act_window">
+        <field name="name">Disease Report</field>
+        <field name="res_model">hr.hospital.disease.report.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Reschedule Visit Wizard -->
+    <record id="view_hr_hospital_reschedule_visit_wizard_form" model="ir.ui.view">
+        <field name="name">hr.hospital.reschedule.visit.wizard.form</field>
+        <field name="model">hr.hospital.reschedule.visit.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Reschedule Visit">
+                <group>
+                    <field name="visit_id" readonly="1"/>
+                    <field name="new_doctor_id"/>
+                    <field name="new_date" required="1"/>
+                    <field name="new_time" required="1"/>
+                    <field name="reason" required="1"/>
+                </group>
+                <footer>
+                    <button name="action_reschedule" string="Reschedule" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_reschedule_visit_wizard" model="ir.actions.act_window">
+        <field name="name">Reschedule Visit</field>
+        <field name="res_model">hr.hospital.reschedule.visit.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Doctor Schedule Wizard -->
+    <record id="view_hr_hospital_doctor_schedule_wizard_form" model="ir.ui.view">
+        <field name="name">hr.hospital.doctor.schedule.wizard.form</field>
+        <field name="model">hr.hospital.doctor.schedule.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Generate Doctor Schedule">
+                <sheet>
+                    <group>
+                        <group string="Basic Info">
+                            <field name="doctor_id" required="1"/>
+                            <field name="start_week" required="1"/>
+                            <field name="week_count" required="1"/>
+                            <field name="schedule_type" required="1"/>
+                        </group>
+                        <group string="Working Days">
+                            <field name="monday"/>
+                            <field name="tuesday"/>
+                            <field name="wednesday"/>
+                            <field name="thursday"/>
+                            <field name="friday"/>
+                            <field name="saturday"/>
+                            <field name="sunday"/>
+                        </group>
+                        <group string="Working Hours">
+                            <field name="start_time"/>
+                            <field name="end_time"/>
+                            <field name="break_start"/>
+                            <field name="break_end"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_generate_schedule" string="Generate Schedule" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_doctor_schedule_wizard" model="ir.actions.act_window">
+        <field name="name">Generate Doctor Schedule</field>
+        <field name="res_model">hr.hospital.doctor.schedule.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+    <!-- Patient Card Export Wizard -->
+    <record id="view_hr_hospital_patient_card_export_wizard_form" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.card.export.wizard.form</field>
+        <field name="model">hr.hospital.patient.card.export.wizard</field>
+        <field name="arch" type="xml">
+            <form string="Export Patient Card">
+                <sheet>
+                    <group>
+                        <group string="Patient">
+                            <field name="patient_id" required="1"/>
+                        </group>
+                        <group string="Date Range">
+                            <field name="start_date"/>
+                            <field name="end_date"/>
+                        </group>
+                        <group string="Export Options">
+                            <field name="include_diagnoses"/>
+                            <field name="include_recommendations"/>
+                            <field name="report_language"/>
+                            <field name="export_format" required="1"/>
+                        </group>
+                    </group>
+                </sheet>
+                <footer>
+                    <button name="action_export" string="Export" type="object" class="btn-primary"/>
+                    <button string="Cancel" class="btn-secondary" special="cancel"/>
+                </footer>
+            </form>
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_patient_card_export_wizard" model="ir.actions.act_window">
+        <field name="name">Export Patient Card</field>
+        <field name="res_model">hr.hospital.patient.card.export.wizard</field>
+        <field name="view_mode">form</field>
+        <field name="target">new</field>
+    </record>
+
+</odoo>

@@ -1,0 +1,104 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <menuitem id="menu_hr_hospital_root"
+              name="Hospital"
+              sequence="10"
+              web_icon="hr_hospital,static/description/icon.png"/>
+
+    <menuitem id="menu_hr_hospital_doctors"
+              name="Doctors"
+              parent="menu_hr_hospital_root"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_doctor"
+              name="All Doctors"
+              parent="menu_hr_hospital_doctors"
+              action="action_hr_hospital_doctor"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_doctor_speciality"
+              name="Specialities"
+              parent="menu_hr_hospital_doctors"
+              action="action_hr_hospital_doctor_speciality"
+              sequence="20"/>
+
+    <menuitem id="menu_hr_hospital_doctor_schedule"
+              name="Schedules"
+              parent="menu_hr_hospital_doctors"
+              action="action_hr_hospital_doctor_schedule"
+              sequence="30"/>
+
+    <menuitem id="menu_hr_hospital_patients"
+              name="Patients"
+              parent="menu_hr_hospital_root"
+              sequence="20"/>
+
+    <menuitem id="menu_hr_hospital_patient"
+              name="All Patients"
+              parent="menu_hr_hospital_patients"
+              action="action_hr_hospital_patient"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_contact_person"
+              name="Contact Persons"
+              parent="menu_hr_hospital_patients"
+              action="action_hr_hospital_contact_person"
+              sequence="20"/>
+
+    <menuitem id="menu_hr_hospital_patient_doctor_history"
+              name="Doctor Assignment History"
+              parent="menu_hr_hospital_patients"
+              action="action_hr_hospital_patient_doctor_history"
+              sequence="30"/>
+
+    <menuitem id="menu_hr_hospital_medical"
+              name="Medical Records"
+              parent="menu_hr_hospital_root"
+              sequence="30"/>
+
+    <menuitem id="menu_hr_hospital_disease"
+              name="Diseases"
+              parent="menu_hr_hospital_medical"
+              action="action_hr_hospital_disease"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_visit"
+              name="Visits"
+              parent="menu_hr_hospital_medical"
+              action="action_hr_hospital_visit"
+              sequence="20"/>
+
+    <menuitem id="menu_hr_hospital_diagnosis"
+              name="Diagnoses"
+              parent="menu_hr_hospital_medical"
+              action="action_hr_hospital_diagnosis"
+              sequence="30"/>
+
+    <record id="action_mass_reassign_doctor" model="ir.actions.server">
+        <field name="name">Mass Reassign Doctor</field>
+        <field name="model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_view_types">list</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = env.ref('hr_hospital.action_hr_hospital_mass_reassign_doctor_wizard').read()[0]
+    action['context'] = {'default_old_doctor_id': records[0].personal_doctor_id.id if records else False}
+    action_res = action
+        </field>
+    </record>
+
+    <record id="action_export_patient_card" model="ir.actions.server">
+        <field name="name">Export Medical Card</field>
+        <field name="model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_model_id" ref="model_hr_hospital_patient"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = env.ref('hr_hospital.action_hr_hospital_patient_card_export_wizard').read()[0]
+    action['context'] = {'default_patient_id': records[0].id}
+    action_res = action
+        </field>
+    </record>
+</odoo>

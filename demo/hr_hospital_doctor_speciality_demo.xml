@@ -1,0 +1,40 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Doctor Specialities Demo Data -->
+        <record id="specialty_cardiology" model="hr.hospital.doctor.speciality">
+            <field name="name">Cardiology</field>
+            <field name="code">CARD001</field>
+            <field name="description">Heart and cardiovascular system specialist</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="specialty_neurology" model="hr.hospital.doctor.speciality">
+            <field name="name">Neurology</field>
+            <field name="code">NEUR002</field>
+            <field name="description">Nervous system specialist</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="specialty_pediatrics" model="hr.hospital.doctor.speciality">
+            <field name="name">Pediatrics</field>
+            <field name="code">PEDI003</field>
+            <field name="description">Children's healthcare specialist</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="specialty_orthopedics" model="hr.hospital.doctor.speciality">
+            <field name="name">Orthopedics</field>
+            <field name="code">ORTH004</field>
+            <field name="description">Bones and joints specialist</field>
+            <field name="active">True</field>
+        </record>
+        
+        <record id="specialty_general_surgery" model="hr.hospital.doctor.speciality">
+            <field name="name">General Surgery</field>
+            <field name="code">SURG005</field>
+            <field name="description">General surgical procedures specialist</field>
+            <field name="active">True</field>
+        </record>
+    </data>
+</odoo>

@@ -1,0 +1,170 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Patient Doctor History Demo Data -->
+        
+        <!-- Initial assignments -->
+        <record id="history_patient_1_doctor_1" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_1"/>
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - new patient registration</field>
+        </record>
+        
+        <record id="history_patient_2_doctor_2" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_2"/>
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - patient transferred from another clinic</field>
+        </record>
+        
+        <record id="history_patient_3_doctor_3" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_3"/>
+            <field name="doctor_id" ref="demo_doctor_3"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - emergency visit follow-up</field>
+        </record>
+        
+        <record id="history_patient_4_doctor_4" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_4"/>
+            <field name="doctor_id" ref="demo_doctor_4"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - allergy specialist referral</field>
+        </record>
+        
+        <record id="history_patient_5_doctor_5" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_5"/>
+            <field name="doctor_id" ref="demo_doctor_intern_1"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - pediatric care</field>
+        </record>
+        
+        <record id="history_patient_6_doctor_6" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_6"/>
+            <field name="doctor_id" ref="demo_doctor_6"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=90)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - surgical consultation</field>
+        </record>
+        
+        <record id="history_patient_7_doctor_7" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_7"/>
+            <field name="doctor_id" ref="demo_doctor_7"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - general practice</field>
+        </record>
+        
+        <record id="history_patient_8_doctor_8" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_8"/>
+            <field name="doctor_id" ref="demo_doctor_8"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=120)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Initial assignment - long-term patient</field>
+        </record>
+        
+        <!-- Doctor changes (inactive records) -->
+        <record id="history_patient_1_doctor_1_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_1"/>
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=60)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=30)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Patient requested specialist change - moved to cardiologist</field>
+        </record>
+        
+        <record id="history_patient_2_doctor_2_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_2"/>
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=80)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=45)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Previous doctor retired - transferred to new neurologist</field>
+        </record>
+        
+        <record id="history_patient_3_doctor_3_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_3"/>
+            <field name="doctor_id" ref="demo_doctor_6"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=50)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=20)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Insurance change required different specialist - moved to surgeon</field>
+        </record>
+        
+        <record id="history_patient_9_doctor_5_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_9"/>
+            <field name="doctor_id" ref="demo_doctor_4"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=180)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=15)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Child outgrew pediatric care - transferred to allergist</field>
+        </record>
+        
+        <record id="history_patient_10_doctor_5_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_10"/>
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=200)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=8)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Family moved - changed to local pediatrician</field>
+        </record>
+        
+        <!-- Multiple changes for same patient -->
+        <record id="history_patient_11_doctor_6_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_11"/>
+            <field name="doctor_id" ref="demo_doctor_5"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=100)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=12)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Initial pediatrician - changed due to surgery requirement</field>
+        </record>
+        
+        <!-- Intern assignments with mentor changes -->
+        <record id="history_patient_5_doctor_intern_old" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_5"/>
+            <field name="doctor_id" ref="demo_doctor_5"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=25)).strftime('%Y-%m-%d')"/>
+            <field name="change_date" eval="(DateTime.now() - timedelta(days=10)).strftime('%Y-%m-%d')"/>
+            <field name="active">False</field>
+            <field name="reason">Intern completed training - transferred to senior pediatrician</field>
+        </record>
+        
+        <!-- Special cases -->
+        <record id="history_patient_12_doctor_6" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_12"/>
+            <field name="doctor_id" ref="demo_doctor_6"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=5)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Pre-operative assessment - surgery scheduled</field>
+        </record>
+        
+        <record id="history_patient_13_doctor_1" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_13"/>
+            <field name="doctor_id" ref="demo_doctor_1"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=7)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Second opinion consultation - referred for cardiac evaluation</field>
+        </record>
+        
+        <record id="history_patient_14_doctor_2" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_14"/>
+            <field name="doctor_id" ref="demo_doctor_2"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=3)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Neurological symptoms - specialist consultation required</field>
+        </record>
+        
+        <record id="history_patient_15_doctor_3" model="hr.hospital.patient.doctor.history">
+            <field name="patient_id" ref="demo_patient_15"/>
+            <field name="doctor_id" ref="demo_doctor_3"/>
+            <field name="assignment_date" eval="(DateTime.now() - timedelta(days=1)).strftime('%Y-%m-%d')"/>
+            <field name="active">True</field>
+            <field name="reason">Post-operative care - orthopedic follow-up required</field>
+        </record>
+    </data>
+</odoo>

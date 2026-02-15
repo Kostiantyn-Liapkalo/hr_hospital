@@ -1,0 +1,108 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="1">
+        <!-- Disease Demo Data with Hierarchical Structure -->
+        
+        <!-- Parent Diseases -->
+        <record id="disease_cardiovascular" model="hr.hospital.disease">
+            <field name="name">Cardiovascular Diseases</field>
+            <field name="icd10_code">I00-I99</field>
+            <field name="danger_level">high</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Chest pain, shortness of breath, palpitations</field>
+        </record>
+        
+        <record id="disease_respiratory" model="hr.hospital.disease">
+            <field name="name">Respiratory Diseases</field>
+            <field name="icd10_code">J00-J99</field>
+            <field name="danger_level">medium</field>
+            <field name="is_infectious">True</field>
+            <field name="symptoms">Cough, shortness of breath, chest discomfort</field>
+        </record>
+        
+        <record id="disease_digestive" model="hr.hospital.disease">
+            <field name="name">Digestive System Diseases</field>
+            <field name="icd10_code">K00-K93</field>
+            <field name="danger_level">medium</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Abdominal pain, nausea, vomiting, digestion issues</field>
+        </record>
+        
+        <!-- Child Diseases (Hierarchical) -->
+        <record id="disease_influenza" model="hr.hospital.disease">
+            <field name="name">Influenza</field>
+            <field name="parent_id" ref="disease_respiratory"/>
+            <field name="icd10_code">J11</field>
+            <field name="danger_level">medium</field>
+            <field name="is_infectious">True</field>
+            <field name="symptoms">Fever, cough, body aches, fatigue, headache</field>
+        </record>
+        
+        <record id="disease_hypertension" model="hr.hospital.disease">
+            <field name="name">Essential Hypertension</field>
+            <field name="parent_id" ref="disease_cardiovascular"/>
+            <field name="icd10_code">I10</field>
+            <field name="danger_level">high</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">High blood pressure, headaches, dizziness</field>
+        </record>
+        
+        <record id="disease_gastritis" model="hr.hospital.disease">
+            <field name="name">Gastritis</field>
+            <field name="parent_id" ref="disease_digestive"/>
+            <field name="icd10_code">K29</field>
+            <field name="danger_level">low</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Stomach pain, nausea, bloating, indigestion</field>
+        </record>
+        
+        <record id="disease_fracture" model="hr.hospital.disease">
+            <field name="name">Bone Fractures</field>
+            <field name="icd10_code">S72</field>
+            <field name="danger_level">severe</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Pain, swelling, deformity, inability to move limb</field>
+        </record>
+        
+        <record id="disease_allergy" model="hr.hospital.disease">
+            <field name="name">Allergic Rhinitis</field>
+            <field name="parent_id" ref="disease_respiratory"/>
+            <field name="icd10_code">J30</field>
+            <field name="danger_level">low</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Sneezing, runny nose, itchy eyes, nasal congestion</field>
+        </record>
+        
+        <!-- Critical Diseases -->
+        <record id="disease_covid19" model="hr.hospital.disease">
+            <field name="name">COVID-19</field>
+            <field name="parent_id" ref="disease_respiratory"/>
+            <field name="icd10_code">U07.1</field>
+            <field name="danger_level">critical</field>
+            <field name="is_infectious">True</field>
+            <field name="symptoms">Fever, dry cough, fatigue, loss of taste/smell</field>
+        </record>
+        
+        <record id="disease_myocardial_infarction" model="hr.hospital.disease">
+            <field name="name">Myocardial Infarction</field>
+            <field name="parent_id" ref="disease_cardiovascular"/>
+            <field name="icd10_code">I21</field>
+            <field name="danger_level">critical</field>
+            <field name="is_infectious">False</field>
+            <field name="symptoms">Chest pain, shortness of breath, sweating, nausea</field>
+        </record>
+        
+        <!-- Set distribution regions for infectious diseases -->
+        <function model="hr.hospital.disease" name="write">
+            <value eval="[ref('disease_influenza')]">
+                <field name="region_ids" eval="[(4, ref('base.us')), (4, ref('base.ca')), (4, ref('base.mx'))]"/>
+            </value>
+        </function>
+        
+        <function model="hr.hospital.disease" name="write">
+            <value eval="[ref('disease_covid19')]">
+                <field name="region_ids" eval="[(4, ref('base.us')), (4, ref('base.cn')), (4, ref('base.in')), (4, ref('base.br'))]"/>
+            </value>
+        </function>
+    </data>
+</odoo>
