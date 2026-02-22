@@ -159,6 +159,16 @@ class HrHospitalDoctor(models.Model):
             else:
                 doctor.display_name = doctor.full_name
 
+    def name_get(self):
+        result = []
+        for doctor in self:
+            if doctor.speciality_id:
+                name = f"{doctor.full_name} ({doctor.speciality_id.name})"
+            else:
+                name = doctor.full_name
+            result.append((doctor.id, name))
+        return result
+
     # Rating validation
     @api.constrains('rating')
     def _check_rating(self):
