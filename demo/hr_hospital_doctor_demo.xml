@@ -1,15 +1,137 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="demo_doctor_house" model="hr.hospital.doctor">
-        <field name="name">Dr. House</field>
-        <field name="specialization">Diagnostician</field>
-    </record>
-    <record id="demo_doctor_watson" model="hr.hospital.doctor">
-        <field name="name">Dr. Watson</field>
-        <field name="specialization">Surgeon</field>
-    </record>
-    <record id="demo_doctor_strange" model="hr.hospital.doctor">
-        <field name="name">Dr. Strange</field>
-        <field name="specialization">Neurosurgeon</field>
-    </record>
+    <data noupdate="1">
+        <!-- Demo Doctors Data -->
+        <!-- Senior Doctors -->
+        <record id="doctor_john_smith" model="hr.hospital.doctor">
+            <field name="first_name">John</field>
+            <field name="last_name">Smith</field>
+            <field name="specialization_id" ref="specialty_cardiology"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">CARD-2020-001</field>
+            <field name="license_date" eval="datetime(2020, 1, 15)"/>
+            <field name="experience" eval="5"/>
+            <field name="rating">4.8</field>
+            <field name="study_country_id" ref="base.us"/>
+            <field name="email">john.smith@hospital.com</field>
+            <field name="phone">+12345678901</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1980, 5, 15)"/>
+        </record>
+        
+        <record id="doctor_emily_jones" model="hr.hospital.doctor">
+            <field name="first_name">Emily</field>
+            <field name="last_name">Jones</field>
+            <field name="specialization_id" ref="specialty_neurology"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">NEUR-2019-002</field>
+            <field name="license_date" eval="datetime(2019, 3, 20)"/>
+            <field name="experience" eval="6"/>
+            <field name="rating">4.9</field>
+            <field name="study_country_id" ref="base.uk"/>
+            <field name="email">emily.jones@hospital.com</field>
+            <field name="phone">+12345678902</field>
+            <field name="gender">female</field>
+            <field name="birth_date" eval="datetime(1982, 8, 22)"/>
+        </record>
+        
+        <record id="doctor_michael_brown" model="hr.hospital.doctor">
+            <field name="first_name">Michael</field>
+            <field name="last_name">Brown</field>
+            <field name="specialization_id" ref="specialty_pediatrics"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">PEDI-2018-003</field>
+            <field name="license_date" eval="datetime(2018, 7, 10)"/>
+            <field name="experience" eval="7"/>
+            <field name="rating">4.7</field>
+            <field name="study_country_id" ref="base.ca"/>
+            <field name="email">michael.brown@hospital.com</field>
+            <field name="phone">+12345678903</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1978, 11, 30)"/>
+        </record>
+        
+        <record id="doctor_sarah_wilson" model="hr.hospital.doctor">
+            <field name="first_name">Sarah</field>
+            <field name="last_name">Wilson</field>
+            <field name="specialization_id" ref="specialty_orthopedics"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">ORTH-2021-004</field>
+            <field name="license_date" eval="datetime(2021, 2, 5)"/>
+            <field name="experience" eval="4"/>
+            <field name="rating">4.6</field>
+            <field name="study_country_id" ref="base.au"/>
+            <field name="email">sarah.wilson@hospital.com</field>
+            <field name="phone">+12345678904</field>
+            <field name="gender">female</field>
+            <field name="birth_date" eval="datetime(1985, 3, 18)"/>
+        </record>
+        
+        <record id="doctor_david_lee" model="hr.hospital.doctor">
+            <field name="first_name">David</field>
+            <field name="last_name">Lee</field>
+            <field name="specialization_id" ref="specialty_general_surgery"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">SURG-2017-005</field>
+            <field name="license_date" eval="datetime(2017, 9, 12)"/>
+            <field name="experience" eval="8"/>
+            <field name="rating">4.9</field>
+            <field name="study_country_id" ref="base.us"/>
+            <field name="email">david.lee@hospital.com</field>
+            <field name="phone">+12345678905</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1975, 6, 8)"/>
+        </record>
+        
+        <record id="doctor_robert_taylor" model="hr.hospital.doctor">
+            <field name="first_name">Robert</field>
+            <field name="last_name">Taylor</field>
+            <field name="specialization_id" ref="specialty_cardiology"/>
+            <field name="is_intern" eval="False"/>
+            <field name="license_number">CARD-2016-006</field>
+            <field name="license_date" eval="datetime(2016, 11, 8)"/>
+            <field name="experience" eval="9"/>
+            <field name="rating">4.8</field>
+            <field name="study_country_id" ref="base.de"/>
+            <field name="email">robert.taylor@hospital.com</field>
+            <field name="phone">+12345678908</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1973, 2, 14)"/>
+        </record>
+        
+        <!-- Intern Doctors -->
+        <record id="doctor_lisa_chen" model="hr.hospital.doctor">
+            <field name="first_name">Lisa</field>
+            <field name="last_name">Chen</field>
+            <field name="specialization_id" ref="specialty_cardiology"/>
+            <field name="is_intern" eval="True"/>
+            <field name="license_number">CARD-2022-007</field>
+            <field name="license_date" eval="datetime(2022, 6, 1)"/>
+            <field name="experience" eval="1"/>
+            <field name="rating">4.2</field>
+            <field name="mentor_id" ref="doctor_john_smith"/>
+            <field name="study_country_id" ref="base.us"/>
+            <field name="email">lisa.chen@hospital.com</field>
+            <field name="phone">+12345678906</field>
+            <field name="gender">female</field>
+            <field name="birth_date" eval="datetime(1992, 4, 12)"/>
+        </record>
+        
+        <record id="doctor_alex_kumar" model="hr.hospital.doctor">
+            <field name="first_name">Alex</field>
+            <field name="last_name">Kumar</field>
+            <field name="specialization_id" ref="specialty_neurology"/>
+            <field name="is_intern" eval="True"/>
+            <field name="license_number">NEUR-2022-008</field>
+            <field name="license_date" eval="datetime(2022, 8, 15)"/>
+            <field name="experience" eval="1"/>
+            <field name="rating">4.1</field>
+            <field name="mentor_id" ref="doctor_emily_jones"/>
+            <field name="study_country_id" ref="base.uk"/>
+            <field name="email">alex.kumar@hospital.com</field>
+            <field name="phone">+12345678907</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1994, 9, 28)"/>
+        </record>
+    </data>
 </odoo>

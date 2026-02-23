@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from datetime import date, datetime
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
-from datetime import date, datetime
+from odoo import _
 
 
 class HrHospitalDoctor(models.Model):
@@ -210,8 +212,53 @@ class HrHospitalDoctor(models.Model):
                 lambda v: v.state in ['planned', 'in_progress']
             )
             if doctor.active and active_visits:  # Check when trying to archive
-                raise UserError(
-                    'Cannot deactivate a doctor with active visits. '
-                    'Please complete or cancel all planned visits first.'
-                )
+                raise UserError(_('Cannot deactivate a doctor with active visits. ') +
+                    _('Please complete or cancel all planned visits first.'))
         return super(HrHospitalDoctor, self).toggle_active()
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        """Dynamic domain for available doctors based on specialty and schedule"""
+        if args is None:
+            args = []
+        
+        # Get doctors with valid license and specialty
+        domain = args + [
+            ('license_number', '!=', False),
+            ('speciality_id', '!=', False),
+            ('active', '=', True)
+        ]
+        
+        if name:
+            domain.append(('full_name', operator, name))
+        
+        # Filter by specialty if specified in context
+        if self.env.context.get('specialty_id'):
+            domain.append(('speciality_id', '=', self.env.context['specialty_id']))
+        
+        # Filter by working schedule if checking availability
+        if self.env.context.get('check_availability'):
+            today = datetime.now().date()
+            weekday = today.weekday()
+            
+            # Find doctors with schedule for today
+            doctors_with_schedule = self.env['hr.hospital.doctor.schedule'].search([
+                ('day_of_week', '=', str(weekday)),
+                ('specific_date', '=', False),  # Regular weekly schedule
+                ('doctor_id', 'in', self.search(domain).ids)
+            ]).mapped('doctor_id')
+            
+            if doctors_with_schedule:
+                domain.append(('id', 'in', doctors_with_schedule.ids))
+        
+        doctors = self.search(domain, limit=limit)
+        return doctors.name_get()
+
+    @api.model
+    def get_doctors_by_study_country(self, country_code):
+        """Get doctors by country of study"""
+        return self.search([
+            ('study_country_id.code', '=', country_code),
+            ('active', '=', True)
+        ])
+

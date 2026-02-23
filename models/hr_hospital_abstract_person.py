@@ -1,8 +1,10 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
 import re
 from datetime import date
+
+from odoo import models, fields, api
+from odoo.exceptions import ValidationError
+from odoo import _
 
 
 class AbstractPerson(models.AbstractModel):
@@ -30,21 +32,19 @@ class AbstractPerson(models.AbstractModel):
 
     # Contact information
     phone = fields.Char(
-        string='Phone',
         help="Format: +380XXXXXXXXX"
     )
-    email = fields.Char(string='Email')
+    email = fields.Char()
 
     # Personal information
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
         ('other', 'Other')
-    ], string='Gender', default='male')
+    ], default='male')
 
-    birth_date = fields.Date(string='Date of Birth')
+    birth_date = fields.Date()
     age = fields.Integer(
-        string='Age',
         compute='_compute_age',
         store=True,
         readonly=True
@@ -52,7 +52,6 @@ class AbstractPerson(models.AbstractModel):
 
     # Computed fields
     full_name = fields.Char(
-        string='Full Name',
         compute='_compute_full_name',
         store=True,
         readonly=True
@@ -100,7 +99,7 @@ class AbstractPerson(models.AbstractModel):
         for record in self:
             if record.phone and not re.match(phone_regex, record.phone.replace(' ', '')):
                 raise ValidationError(
-                    'Invalid phone format. Please use the format: +380XXXXXXXXX'
+                    _('Invalid phone format. Please use the format: +380XXXXXXXXX')
                 )
 
     # Email validation
@@ -109,11 +108,11 @@ class AbstractPerson(models.AbstractModel):
         email_regex = r'^[a-zA-Z0-9._%+-]+@[a-zA-Z0-9.-]+\.[a-zA-Z]{2,}$'
         for record in self:
             if record.email and not re.match(email_regex, record.email):
-                raise ValidationError('Invalid email format.')
+                raise ValidationError(_('Invalid email format.'))
 
     # Birth date validation
     @api.constrains('birth_date')
     def _check_birth_date(self):
         for record in self:
             if record.birth_date and record.birth_date > date.today():
-                raise ValidationError('Date of birth cannot be in the future.')
+                raise ValidationError(_('Date of birth cannot be in the future.'))

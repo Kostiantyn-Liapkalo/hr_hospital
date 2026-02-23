@@ -248,7 +248,42 @@ class HrHospitalPatient(models.Model):
             )
             if active_visits:
                 raise UserError(
-                    'Cannot delete patient with active visits. '
+                    'Cannot delete a patient with active visits. '
                     'Please complete or cancel all visits first.'
                 )
         return super(HrHospitalPatient, self).unlink()
+
+    @api.model
+    def get_patients_by_language_and_country(self, lang_code=None, country_code=None):
+        """Get patients by language and country of citizenship"""
+        domain = [('active', '=', True)]
+        
+        if lang_code:
+            domain.append(('lang_id.code', '=', lang_code))
+            
+        if country_code:
+            domain.append(('country_id.code', '=', country_code))
+            
+        return self.search(domain)
+
+    @api.model
+    def name_search(self, name='', args=None, operator='ilike', limit=100):
+        """Dynamic domain for patients based on language and country"""
+        if args is None:
+            args = []
+            
+        domain = args + [('active', '=', True)]
+        
+        if name:
+            domain.append(('full_name', operator, name))
+            
+        # Filter by language if specified in context
+        if self.env.context.get('lang_code'):
+            domain.append(('lang_id.code', '=', self.env.context['lang_code']))
+            
+        # Filter by country if specified in context
+        if self.env.context.get('country_code'):
+            domain.append(('country_id.code', '=', self.env.context['country_code']))
+            
+        patients = self.search(domain, limit=limit)
+        return patients.name_get()

@@ -24,6 +24,13 @@ class HrHospitalContactPerson(models.Model):
         string='Patients'
     )
 
+    # Field for selecting patients when creating contact person
+    patient_selection_ids = fields.Many2many(
+        'hr.hospital.patient',
+        string='Patients',
+        domain="[('allergies', '!=', False)]"
+    )
+
     emergency_contact = fields.Boolean(
         string='Emergency Contact',
         default=True

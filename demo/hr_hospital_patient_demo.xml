@@ -1,18 +1,433 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
-    <record id="demo_patient_john" model="hr.hospital.patient">
-        <field name="name">John Doe</field>
-        <field name="age">30</field>
-        <field name="doctor_id" ref="hr_hospital.demo_doctor_house"/>
-    </record>
-    <record id="demo_patient_jane" model="hr.hospital.patient">
-        <field name="name">Jane Smith</field>
-        <field name="age">25</field>
-        <field name="doctor_id" ref="hr_hospital.demo_doctor_watson"/>
-    </record>
-    <record id="demo_patient_bob" model="hr.hospital.patient">
-        <field name="name">Bob Brown</field>
-        <field name="age">45</field>
-        <field name="doctor_id" ref="hr_hospital.demo_doctor_strange"/>
-    </record>
+    <data noupdate="1">
+        <!-- Demo Patients with Contact Persons -->
+        <!-- Patients -->
+        <record id="patient_john_doe" model="hr.hospital.patient">
+            <field name="first_name">John</field>
+            <field name="last_name">Doe</field>
+            <field name="birth_date" eval="datetime(1985, 3, 15)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678901</field>
+            <field name="email">john.doe@email.com</field>
+            <field name="blood_group">O+</field>
+            <field name="allergies">Penicillin, Peanuts</field>
+            <field name="chronic_diseases">Hypertension</field>
+            <field name="passport">AB123456789</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_john_smith"/>
+            <field name="insurance_company_id" ref="base.res_partner_1"/>
+            <field name="insurance_policy_number">INS-001-234567</field>
+        </record>
+        
+        <record id="patient_jane_smith" model="hr.hospital.patient">
+            <field name="first_name">Jane</field>
+            <field name="last_name">Smith</field>
+            <field name="birth_date" eval="datetime(1990, 7, 22)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678902</field>
+            <field name="email">jane.smith@email.com</field>
+            <field name="blood_group">A+</field>
+            <field name="allergies">Shellfish, Latex</field>
+            <field name="chronic_diseases">Asthma</field>
+            <field name="passport">CD987654321</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_emily_jones"/>
+            <field name="insurance_company_id" ref="base.res_partner_2"/>
+            <field name="insurance_policy_number">INS-002-345678</field>
+        </record>
+        
+        <record id="patient_michael_brown" model="hr.hospital.patient">
+            <field name="first_name">Michael</field>
+            <field name="last_name">Brown</field>
+            <field name="birth_date" eval="datetime(1978, 11, 8)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678903</field>
+            <field name="email">michael.brown@email.com</field>
+            <field name="blood_group">B+</field>
+            <field name="allergies">None</field>
+            <field name="chronic_diseases">Diabetes Type 2</field>
+            <field name="passport">EF456789012</field>
+            <field name="country_id" ref="base.ca"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_michael_brown"/>
+            <field name="insurance_company_id" ref="base.res_partner_3"/>
+            <field name="insurance_policy_number">INS-003-456789</field>
+        </record>
+        
+        <record id="patient_sarah_wilson" model="hr.hospital.patient">
+            <field name="first_name">Sarah</field>
+            <field name="last_name">Wilson</field>
+            <field name="birth_date" eval="datetime(1992, 5, 30)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678904</field>
+            <field name="email">sarah.wilson@email.com</field>
+            <field name="blood_group">AB-</field>
+            <field name="allergies">Dust, Pollen</field>
+            <field name="chronic_diseases">Migraine</field>
+            <field name="passport">GH789012345</field>
+            <field name="country_id" ref="base.uk"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_sarah_wilson"/>
+            <field name="insurance_company_id" ref="base.res_partner_4"/>
+            <field name="insurance_policy_number">INS-004-567890</field>
+        </record>
+        
+        <record id="patient_david_lee" model="hr.hospital.patient">
+            <field name="first_name">David</field>
+            <field name="last_name">Lee</field>
+            <field name="birth_date" eval="datetime(1988, 9, 12)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678905</field>
+            <field name="email">david.lee@email.com</field>
+            <field name="blood_group">O-</field>
+            <field name="allergies">Sulfa drugs</field>
+            <field name="chronic_diseases">None</field>
+            <field name="passport">IJ012345678</field>
+            <field name="country_id" ref="base.au"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_david_lee"/>
+            <field name="insurance_company_id" ref="base.res_partner_5"/>
+            <field name="insurance_policy_number">INS-005-678901</field>
+        </record>
+        
+        <record id="patient_emily_davis" model="hr.hospital.patient">
+            <field name="first_name">Emily</field>
+            <field name="last_name">Davis</field>
+            <field name="birth_date" eval="datetime(1995, 2, 18)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678906</field>
+            <field name="email">emily.davis@email.com</field>
+            <field name="blood_group">A-</field>
+            <field name="allergies">Eggs, Soy</field>
+            <field name="chronic_diseases">Hypothyroidism</field>
+            <field name="passport">KL345678901</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_robert_taylor"/>
+            <field name="insurance_company_id" ref="base.res_partner_6"/>
+            <field name="insurance_policy_number">INS-006-789012</field>
+        </record>
+        
+        <record id="patient_robert_taylor" model="hr.hospital.patient">
+            <field name="first_name">Robert</field>
+            <field name="last_name">Taylor</field>
+            <field name="birth_date" eval="datetime(1982, 6, 25)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678907</field>
+            <field name="email">robert.taylor@email.com</field>
+            <field name="blood_group">B-</field>
+            <field name="allergies">Bee stings</field>
+            <field name="chronic_diseases">Arthritis</field>
+            <field name="passport">MN456789012</field>
+            <field name="country_id" ref="base.de"/>
+            <field name="lang_id" ref="base.lang_de"/>
+            <field name="personal_doctor_id" ref="doctor_john_smith"/>
+            <field name="insurance_company_id" ref="base.res_partner_7"/>
+            <field name="insurance_policy_number">INS-007-890123</field>
+        </record>
+        
+        <record id="patient_lisa_chen" model="hr.hospital.patient">
+            <field name="first_name">Lisa</field>
+            <field name="last_name">Chen</field>
+            <field name="birth_date" eval="datetime(1993, 8, 14)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678908</field>
+            <field name="email">lisa.chen@email.com</field>
+            <field name="blood_group">A+</field>
+            <field name="allergies">None</field>
+            <field name="chronic_diseases">None</field>
+            <field name="passport">OP567890123</field>
+            <field name="country_id" ref="base.cn"/>
+            <field name="lang_id" ref="base.lang_zh_CN"/>
+            <field name="personal_doctor_id" ref="doctor_lisa_chen"/>
+            <field name="insurance_company_id" ref="base.res_partner_8"/>
+            <field name="insurance_policy_number">INS-008-901234</field>
+        </record>
+        
+        <record id="patient_alex_kumar" model="hr.hospital.patient">
+            <field name="first_name">Alex</field>
+            <field name="last_name">Kumar</field>
+            <field name="birth_date" eval="datetime(1987, 12, 3)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678909</field>
+            <field name="email">alex.kumar@email.com</field>
+            <field name="blood_group">O+</field>
+            <field name="allergies">Dairy products</field>
+            <field name="chronic_diseases">None</field>
+            <field name="passport">QR678901234</field>
+            <field name="country_id" ref="base.in"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_alex_kumar"/>
+            <field name="insurance_company_id" ref="base.res_partner_9"/>
+            <field name="insurance_policy_number">INS-009-012345</field>
+        </record>
+        
+        <record id="patient_maria_garcia" model="hr.hospital.patient">
+            <field name="first_name">Maria</field>
+            <field name="last_name">Garcia</field>
+            <field name="birth_date" eval="datetime(1991, 4, 8)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678910</field>
+            <field name="email">maria.garcia@email.com</field>
+            <field name="blood_group">B+</field>
+            <field name="allergies">Nuts</field>
+            <field name="chronic_diseases">Eczema</field>
+            <field name="passport">ST789012345</field>
+            <field name="country_id" ref="base.es"/>
+            <field name="lang_id" ref="base.lang_es"/>
+            <field name="personal_doctor_id" ref="doctor_emily_jones"/>
+            <field name="insurance_company_id" ref="base.res_partner_10"/>
+            <field name="insurance_policy_number">INS-010-123456</field>
+        </record>
+        
+        <record id="patient_james_wilson" model="hr.hospital.patient">
+            <field name="first_name">James</field>
+            <field name="last_name">Wilson</field>
+            <field name="birth_date" eval="datetime(1984, 10, 19)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678911</field>
+            <field name="email">james.wilson@email.com</field>
+            <field name="blood_group">AB+</field>
+            <field name="allergies">Pollen, Dust mites</field>
+            <field name="chronic_diseases">Seasonal allergies</field>
+            <field name="passport">UV890123456</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_michael_brown"/>
+            <field name="insurance_company_id" ref="base.res_partner_11"/>
+            <field name="insurance_policy_number">INS-011-234567</field>
+        </record>
+        
+        <record id="patient_sophie_martin" model="hr.hospital.patient">
+            <field name="first_name">Sophie</field>
+            <field name="last_name">Martin</field>
+            <field name="birth_date" eval="datetime(1996, 1, 25)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678912</field>
+            <field name="email">sophie.martin@email.com</field>
+            <field name="blood_group">O+</field>
+            <field name="allergies">None</field>
+            <field name="chronic_diseases">None</field>
+            <field name="passport">WX901234567</field>
+            <field name="country_id" ref="base.fr"/>
+            <field name="lang_id" ref="base.lang_fr"/>
+            <field name="personal_doctor_id" ref="doctor_sarah_wilson"/>
+            <field name="insurance_company_id" ref="base.res_partner_12"/>
+            <field name="insurance_policy_number">INS-012-345678</field>
+        </record>
+        
+        <record id="patient_daniel_kim" model="hr.hospital.patient">
+            <field name="first_name">Daniel</field>
+            <field name="last_name">Kim</field>
+            <field name="birth_date" eval="datetime(1989, 7, 16)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678913</field>
+            <field name="email">daniel.kim@email.com</field>
+            <field name="blood_group">A+</field>
+            <field name="allergies">Sesame seeds</field>
+            <field name="chronic_diseases">None</field>
+            <field name="passport">YZ012345678</field>
+            <field name="country_id" ref="base.kr"/>
+            <field name="lang_id" ref="base.lang_ko"/>
+            <field name="personal_doctor_id" ref="doctor_david_lee"/>
+            <field name="insurance_company_id" ref="base.res_partner_13"/>
+            <field name="insurance_policy_number">INS-013-456789</field>
+        </record>
+        
+        <record id="patient_olivia_brown" model="hr.hospital.patient">
+            <field name="first_name">Olivia</field>
+            <field name="last_name">Brown</field>
+            <field name="birth_date" eval="datetime(1994, 11, 2)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678914</field>
+            <field name="email">olivia.brown@email.com</field>
+            <field name="blood_group">B-</field>
+            <field name="allergies">Gluten</field>
+            <field name="chronic_diseases">Celiac disease</field>
+            <field name="passport">AB123456789</field>
+            <field name="country_id" ref="base.nz"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_robert_taylor"/>
+            <field name="insurance_company_id" ref="base.res_partner_14"/>
+            <field name="insurance_policy_number">INS-014-567890</field>
+        </record>
+        
+        <record id="patient_lucas_anderson" model="hr.hospital.patient">
+            <field name="first_name">Lucas</field>
+            <field name="last_name">Anderson</field>
+            <field name="birth_date" eval="datetime(1986, 5, 28)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678915</field>
+            <field name="email">lucas.anderson@email.com</field>
+            <field name="blood_group">O+</field>
+            <field name="allergies">None</field>
+            <field name="chronic_diseases">High cholesterol</field>
+            <field name="passport">CD234567890</field>
+            <field name="country_id" ref="base.us"/>
+            <field name="lang_id" ref="base.lang_en"/>
+            <field name="personal_doctor_id" ref="doctor_david_lee"/>
+            <field name="insurance_company_id" ref="base.res_partner_15"/>
+            <field name="insurance_policy_number">INS-015-678901</field>
+        </record>
+        
+        <!-- Contact Persons -->
+        <record id="contact_mary_doe" model="hr.hospital.contact.person">
+            <field name="first_name">Mary</field>
+            <field name="last_name">Doe</field>
+            <field name="birth_date" eval="datetime(1955, 8, 20)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678916</field>
+            <field name="email">mary.doe@email.com</field>
+            <field name="relationship">spouse</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_robert_smith" model="hr.hospital.contact.person">
+            <field name="first_name">Robert</field>
+            <field name="last_name">Smith</field>
+            <field name="birth_date" eval="datetime(1960, 3, 10)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678917</field>
+            <field name="email">robert.smith@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_susan_brown" model="hr.hospital.contact.person">
+            <field name="first_name">Susan</field>
+            <field name="last_name">Brown</field>
+            <field name="birth_date" eval="datetime(1952, 12, 5)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678918</field>
+            <field name="email">susan.brown@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_james_wilson" model="hr.hospital.contact.person">
+            <field name="first_name">James</field>
+            <field name="last_name">Wilson</field>
+            <field name="birth_date" eval="datetime(1958, 7, 15)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678919</field>
+            <field name="email">james.wilson@email.com</field>
+            <field name="relationship">sibling</field>
+            <field name="emergency_contact" eval="False"/>
+            <field name="can_make_decisions" eval="False"/>
+        </record>
+        
+        <record id="contact_patricia_lee" model="hr.hospital.contact.person">
+            <field name="first_name">Patricia</field>
+            <field name="last_name">Lee</field>
+            <field name="birth_date" eval="datetime(1963, 9, 22)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678920</field>
+            <field name="email">patricia.lee@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_michael_davis" model="hr.hospital.contact.person">
+            <field name="first_name">Michael</field>
+            <field name="last_name">Davis</field>
+            <field name="birth_date" eval="datetime(1965, 4, 8)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678921</field>
+            <field name="email">michael.davis@email.com</field>
+            <field name="relationship">spouse</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_linda_taylor" model="hr.hospital.contact.person">
+            <field name="first_name">Linda</field>
+            <field name="last_name">Taylor</field>
+            <field name="birth_date" eval="datetime(1957, 11, 30)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678922</field>
+            <field name="email">linda.taylor@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_david_chen" model="hr.hospital.contact.person">
+            <field name="first_name">David</field>
+            <field name="last_name">Chen</field>
+            <field name="birth_date" eval="datetime(1961, 6, 12)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678923</field>
+            <field name="email">david.chen@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_rachel_garcia" model="hr.hospital.contact.person">
+            <field name="first_name">Rachel</field>
+            <field name="last_name">Garcia</field>
+            <field name="birth_date" eval="datetime(1959, 2, 14)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678924</field>
+            <field name="email">rachel.garcia@email.com</field>
+            <field name="relationship">sibling</field>
+            <field name="emergency_contact" eval="False"/>
+            <field name="can_make_decisions" eval="False"/>
+        </record>
+        
+        <record id="contact_thomas_martin" model="hr.hospital.contact.person">
+            <field name="first_name">Thomas</field>
+            <field name="last_name">Martin</field>
+            <field name="birth_date" eval="datetime(1964, 8, 7)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678925</field>
+            <field name="email">thomas.martin@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_jennifer_kim" model="hr.hospital.contact.person">
+            <field name="first_name">Jennifer</field>
+            <field name="last_name">Kim</field>
+            <field name="birth_date" eval="datetime(1962, 10, 25)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678926</field>
+            <field name="email">jennifer.kim@email.com</field>
+            <field name="relationship">spouse</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_william_brown" model="hr.hospital.contact.person">
+            <field name="first_name">William</field>
+            <field name="last_name">Brown</field>
+            <field name="birth_date" eval="datetime(1956, 5, 18)"/>
+            <field name="gender">male</field>
+            <field name="phone">+12345678927</field>
+            <field name="email">william.brown@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+        
+        <record id="contact_sophie_anderson" model="hr.hospital.contact.person">
+            <field name="first_name">Sophie</field>
+            <field name="last_name">Anderson</field>
+            <field name="birth_date" eval="datetime(1960, 12, 1)"/>
+            <field name="gender">female</field>
+            <field name="phone">+12345678928</field>
+            <field name="email">sophie.anderson@email.com</field>
+            <field name="relationship">parent</field>
+            <field name="emergency_contact" eval="True"/>
+            <field name="can_make_decisions" eval="True"/>
+        </record>
+    </data>
 </odoo>

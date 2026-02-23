@@ -1,6 +1,9 @@
 # -*- coding: utf-8 -*-
+import logging
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
+
+_logger = logging.getLogger(__name__)
 
 
 class HrHospitalMassReassignDoctorWizard(models.TransientModel):
@@ -10,31 +13,26 @@ class HrHospitalMassReassignDoctorWizard(models.TransientModel):
     # Wizard Fields
     old_doctor_id = fields.Many2one(
         'hr.hospital.doctor',
-        string='Current Doctor',
         required=True
     )
 
     new_doctor_id = fields.Many2one(
         'hr.hospital.doctor',
-        string='New Doctor',
         required=True,
         domain="[('is_intern', '=', False), ('id', '!=', old_doctor_id)]"
     )
 
     patient_ids = fields.Many2many(
         'hr.hospital.patient',
-        string='Patients',
         domain="[('personal_doctor_id', '=', old_doctor_id)]"
     )
 
     change_date = fields.Date(
-        string='Change Date',
         required=True,
         default=fields.Date.today
     )
 
     reason = fields.Text(
-        string='Reason for Change',
         required=True
     )
 
@@ -44,10 +42,10 @@ class HrHospitalMassReassignDoctorWizard(models.TransientModel):
 
         # Validation
         if not self.patient_ids:
-            raise ValidationError('Please select at least one patient.')
+            raise ValidationError(_('Please select at least one patient.'))
 
         if self.old_doctor_id == self.new_doctor_id:
-            raise ValidationError('The current and new doctor cannot be the same person.')
+            raise ValidationError(_('The current and new doctor cannot be the same person.'))
 
         # Mass update logic
         for patient in self.patient_ids:
@@ -90,3 +88,5 @@ class HrHospitalMassReassignDoctorWizard(models.TransientModel):
                     'patient_ids': [('personal_doctor_id', '=', self.old_doctor_id.id)]
                 }
             }
+        return {}
+

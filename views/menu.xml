@@ -74,6 +74,57 @@
               action="action_hr_hospital_diagnosis"
               sequence="30"/>
 
+    <menuitem id="menu_hr_hospital_tools"
+              name="Tools"
+              parent="menu_hr_hospital_root"
+              sequence="40"/>
+
+    <menuitem id="menu_hr_hospital_tools_mass_reassign"
+              name="Mass Reassign Doctor"
+              parent="menu_hr_hospital_tools"
+              action="action_mass_reassign_doctor"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_tools_export_card"
+              name="Export Medical Card"
+              parent="menu_hr_hospital_tools"
+              action="action_export_patient_card"
+              sequence="20"/>
+
+    <menuitem id="menu_hr_hospital_reports"
+              name="Reports"
+              parent="menu_hr_hospital_root"
+              sequence="50"/>
+
+    <menuitem id="menu_hr_hospital_reports_disease"
+              name="Disease Report"
+              parent="menu_hr_hospital_reports"
+              action="action_hr_hospital_disease_report_wizard"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_patient_tools"
+              name="Tools"
+              parent="menu_hr_hospital_patients"
+              sequence="40"/>
+
+    <menuitem id="menu_hr_hospital_patient_tools_export"
+              name="Export Medical Card"
+              parent="menu_hr_hospital_patient_tools"
+              action="action_export_patient_card"
+              sequence="10"/>
+
+    <menuitem id="menu_hr_hospital_visits_tools"
+              name="Tools"
+              parent="menu_hr_hospital_visit"
+              sequence="40"/>
+
+    <menuitem id="menu_hr_hospital_visits_tools_reschedule"
+              name="Reschedule Visit"
+              parent="menu_hr_hospital_visits_tools"
+              action="action_hr_hospital_reschedule_visit_wizard"
+              sequence="10"/>
+
+    <!-- Server Actions for Wizards -->
     <record id="action_mass_reassign_doctor" model="ir.actions.server">
         <field name="name">Mass Reassign Doctor</field>
         <field name="model_id" ref="model_hr_hospital_patient"/>
@@ -98,6 +149,33 @@ if records:
 if records:
     action = env.ref('hr_hospital.action_hr_hospital_patient_card_export_wizard').read()[0]
     action['context'] = {'default_patient_id': records[0].id}
+    action_res = action
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_disease_report_wizard" model="ir.actions.server">
+        <field name="name">Disease Report</field>
+        <field name="model_id" ref="model_hr_hospital_diagnosis"/>
+        <field name="binding_model_id" ref="model_hr_hospital_diagnosis"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = env.ref('hr_hospital.action_hr_hospital_disease_report_wizard').read()[0]
+    action_res = action
+        </field>
+    </record>
+
+    <record id="action_hr_hospital_reschedule_visit_wizard" model="ir.actions.server">
+        <field name="name">Reschedule Visit</field>
+        <field name="model_id" ref="model_hr_hospital_visit"/>
+        <field name="binding_model_id" ref="model_hr_hospital_visit"/>
+        <field name="binding_view_types">list,form</field>
+        <field name="state">code</field>
+        <field name="code">
+if records:
+    action = env.ref('hr_hospital.action_hr_hospital_reschedule_visit_wizard').read()[0]
+    action['context'] = {'default_visit_id': records[0].id}
     action_res = action
         </field>
     </record>

@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
+from datetime import datetime, timedelta
+
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
-from datetime import datetime, timedelta
+from odoo import _
 
 
 class HrHospitalDiagnosis(models.Model):
@@ -28,7 +30,7 @@ class HrHospitalDiagnosis(models.Model):
         'hr.hospital.disease',
         string='Disease',
         required=True,
-        domain="[('is_infectious', '=', True), ('danger_level', 'in', ['high', 'critical'])]"
+        domain="[('active', '=', True), ('danger_level', 'in', ['high', 'critical'])]"
     )
 
     description = fields.Text(
@@ -94,7 +96,7 @@ class HrHospitalDiagnosis(models.Model):
             if not diagnosis.is_approved:
                 # Check if doctor can approve (is not an intern)
                 if self.env.user.doctor_id and self.env.user.doctor_id.is_intern:
-                    raise UserError('An intern cannot approve diagnoses.')
+                    raise UserError(_('An intern cannot approve diagnoses.'))
 
                 diagnosis.write({
                     'is_approved': True,
@@ -116,9 +118,9 @@ class HrHospitalDiagnosis(models.Model):
     def _check_diagnosis_date(self):
         for diagnosis in self:
             if diagnosis.diagnosis_date > fields.Datetime.now():
-                raise ValidationError('The diagnosis date cannot be in the future.')
+                raise ValidationError(_('The diagnosis date cannot be in the future.'))
             if diagnosis.diagnosis_date < diagnosis.visit_id.planned_datetime:
-                raise ValidationError('The examination date cannot be earlier than the visit date.')
+                raise ValidationError(_('The examination date cannot be earlier than the visit date.'))
 
     # Method for automatic approval by mentor
     def _auto_approve_by_mentor(self):

@@ -18,7 +18,6 @@ class HrHospitalDisease(models.Model):
         translate=True
     )
     complete_name = fields.Char(
-        string='Full Name',
         compute='_compute_complete_name',
         store=True,
         recursive=True  # IMPORTANT: Required for hierarchical fields in Odoo 19.0
@@ -30,7 +29,6 @@ class HrHospitalDisease(models.Model):
         ondelete='cascade'
     )
     parent_path = fields.Char(
-        string='Parent Path',
         index=True,
         unaccent=False
     )
@@ -52,15 +50,13 @@ class HrHospitalDisease(models.Model):
         ('medium', 'Medium'),
         ('high', 'High'),
         ('critical', 'Critical')
-    ], string='Danger Level', default='medium', required=True)
+    ], default='medium', required=True)
 
     is_infectious = fields.Boolean(
-        string='Is Infectious',
         default=False
     )
 
     symptoms = fields.Text(
-        string='Symptoms',
         help='General symptoms of the disease'
     )
 
@@ -126,7 +122,7 @@ class HrHospitalDisease(models.Model):
     @api.constrains('parent_id')
     def _check_parent_id(self):
         if not self._check_recursion():
-            raise ValidationError('You cannot create recursive disease hierarchies.')
+            raise ValidationError(_('You cannot create recursive disease hierarchies.'))
 
     # Prevent archiving diseases with active diagnoses
     def toggle_active(self):
@@ -136,7 +132,7 @@ class HrHospitalDisease(models.Model):
             )
             if disease.active and active_diagnoses:  # When trying to archive
                 raise ValidationError(
-                    'Cannot archive a disease that has existing diagnoses. '
-                    'Please archive or delete the diagnoses first.'
+                    _('Cannot archive a disease that has existing diagnoses. ') +
+                    _('Please archive or delete the diagnoses first.')
                 )
         return super(HrHospitalDisease, self).toggle_active()

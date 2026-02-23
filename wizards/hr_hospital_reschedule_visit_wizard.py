@@ -1,7 +1,8 @@
 # -*- coding: utf-8 -*-
-from odoo import models, fields, api
-from odoo.exceptions import ValidationError
 from datetime import datetime, timedelta
+
+from odoo import models, fields
+from odoo.exceptions import ValidationError
 
 
 class HrHospitalRescheduleVisitWizard(models.TransientModel):
@@ -11,30 +12,25 @@ class HrHospitalRescheduleVisitWizard(models.TransientModel):
     # Fields
     visit_id = fields.Many2one(
         'hr.hospital.visit',
-        string='Current Visit',
         required=True,
         readonly=True
     )
 
     new_doctor_id = fields.Many2one(
-        'hr.hospital.doctor',
-        string='New Doctor'
+        'hr.hospital.doctor'
     )
 
     new_date = fields.Date(
-        string='New Date',
         required=True,
         default=fields.Date.today
     )
 
     new_time = fields.Float(
-        string='New Time',
         required=True,
         default=9.0  # 9:00 AM
     )
 
     reason = fields.Text(
-        string='Reason for Rescheduling',
         required=True
     )
 
@@ -44,7 +40,7 @@ class HrHospitalRescheduleVisitWizard(models.TransientModel):
 
         # Check visit state
         if self.visit_id.state not in ['planned', 'in_progress']:
-            raise ValidationError('Only planned or in-progress visits can be rescheduled.')
+            raise ValidationError(_('Only planned or in-progress visits can be rescheduled.'))
 
         # Construct new datetime
         new_datetime = datetime.combine(
@@ -67,7 +63,7 @@ class HrHospitalRescheduleVisitWizard(models.TransientModel):
 
         if existing_visit:
             raise ValidationError(
-                'The patient already has a scheduled visit with this doctor on this day.'
+                _('The patient already has a scheduled visit with this doctor on this day.')
             )
 
         # Update visit
@@ -95,3 +91,4 @@ class HrHospitalRescheduleVisitWizard(models.TransientModel):
                 }
             }
         }
+
