@@ -133,5 +133,40 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1994, 9, 28)"/>
         </record>
+        
+        <!-- Additional Intern Doctors -->
+        <record id="doctor_sophie_martin" model="hr.hospital.doctor">
+            <field name="first_name">Sophie</field>
+            <field name="last_name">Martin</field>
+            <field name="specialization_id" ref="specialty_pediatrics"/>
+            <field name="is_intern" eval="True"/>
+            <field name="license_number">PEDI-2023-009</field>
+            <field name="license_date" eval="datetime(2023, 1, 10)"/>
+            <field name="experience" eval="0"/>
+            <field name="rating">3.8</field>
+            <field name="mentor_id" ref="doctor_michael_brown"/>
+            <field name="study_country_id" ref="base.fr"/>
+            <field name="email">sophie.martin@hospital.com</field>
+            <field name="phone">+12345678908</field>
+            <field name="gender">female</field>
+            <field name="birth_date" eval="datetime(1995, 3, 15)"/>
+        </record>
+        
+        <record id="doctor_daniel_kim" model="hr.hospital.doctor">
+            <field name="first_name">Daniel</field>
+            <field name="last_name">Kim</field>
+            <field name="specialization_id" ref="specialty_cardiology"/>
+            <field name="is_intern" eval="True"/>
+            <field name="license_number">CARD-2023-010</field>
+            <field name="license_date" eval="datetime(2023, 3, 20)"/>
+            <field name="experience" eval="0"/>
+            <field name="rating">4.0</field>
+            <field name="mentor_id" ref="doctor_john_smith"/>
+            <field name="study_country_id" ref="base.kr"/>
+            <field name="email">daniel.kim@hospital.com</field>
+            <field name="phone">+12345678909</field>
+            <field name="gender">male</field>
+            <field name="birth_date" eval="datetime(1993, 7, 8)"/>
+        </record>
     </data>
 </odoo>

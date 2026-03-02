@@ -5,7 +5,7 @@
         <field name="model">hr.hospital.visit</field>
         <field name="arch" type="xml">
             <list>
-                <field name="visit_date"/>
+                <field name="planned_datetime"/>
                 <field name="doctor_id"/>
                 <field name="patient_id"/>
                 <field name="diagnosis_ids" widget="many2many_tags"/>
@@ -18,25 +18,140 @@
         <field name="model">hr.hospital.visit</field>
         <field name="arch" type="xml">
             <form>
+                <header>
+                    <field name="state" widget="statusbar" statusbar_visible="planned,in_progress,completed,cancelled,no_show"/>
+                    <button name="action_start_visit" string="Start Visit" type="object" invisible="state != 'planned'" class="btn-primary"/>
+                    <button name="action_complete_visit" string="Complete" type="object" invisible="state != 'in_progress'" class="btn-success"/>
+                    <button name="action_cancel_visit" string="Cancel" type="object" invisible="state not in ('planned', 'in_progress')" class="btn-danger"/>
+                    <button name="action_mark_no_show" string="No Show" type="object" invisible="state != 'planned'"/>
+                    <button name="%(action_patient_visit_history)d" string="Patient Visit History" type="action" class="btn-secondary" invisible="not patient_id"/>
+                </header>
                 <sheet>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="patient_id" placeholder="Select Patient..."/>
+                        </h1>
+                    </div>
                     <group>
-                        <group>
-                            <field name="visit_date"/>
+                        <group string="Visit Information">
+                            <field name="planned_datetime"/>
+                            <field name="actual_datetime" readonly="state in ('planned', 'cancelled')"/>
                             <field name="doctor_id"/>
-                            <field name="patient_id"/>
+                            <field name="visit_type" required="1"/>
+                            <field name="duration" readonly="1"/>
+                            <field name="diagnosis_count" readonly="1"/>
+                            <field name="patient_age" readonly="1"/>
+                            <field name="doctor_speciality_id" readonly="1"/>
                         </group>
-                        <group>
-                            <field name="diagnosis_ids" widget="many2many_tags"/>
+                        <group string="Cost">
+                            <field name="cost"/>
+                            <field name="currency_id" readonly="1"/>
                         </group>
                     </group>
+                    <notebook>
+                        <page string="Diagnoses">
+                            <field name="diagnosis_ids" mode="list">
+                                <list editable="bottom">
+                                    <field name="diagnosis_date"/>
+                                    <field name="disease_id"/>
+                                    <field name="doctor_id"/>
+                                    <field name="is_approved"/>
+                                    <field name="description"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Doctor Diagnosis History">
+                            <field name="doctor_id" readonly="1" invisible="1"/>
+                            <field name="doctor_diagnosis_history_ids" readonly="1">
+                                <list>
+                                    <field name="diagnosis_date"/>
+                                    <field name="patient_id"/>
+                                    <field name="disease_id"/>
+                                    <field name="severity"/>
+                                    <field name="is_approved"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Recommendations">
+                            <field name="recommendations" widget="html"/>
+                        </page>
+                    </notebook>
                 </sheet>
+                <div class="oe_chatter">
+                    <field name="message_ids" widget="mail_thread"/>
+                    <field name="activity_ids" widget="mail_activity"/>
+                </div>
             </form>
+        </field>
+    </record>
+
+    <record id="view_hr_hospital_visit_calendar" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.calendar</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <calendar string="Visits" date_start="planned_datetime" date_stop="actual_datetime" date_delay="duration" color="doctor_id">
+                <field name="patient_id" string="Patient"/>
+                <field name="doctor_id" string="Doctor"/>
+                <field name="state"/>
+                <field name="visit_type"/>
+            </calendar>
         </field>
     </record>
 
     <record id="action_hr_hospital_visit" model="ir.actions.act_window">
         <field name="name">Visits</field>
         <field name="res_model">hr.hospital.visit</field>
-        <field name="view_mode">list,form</field>
+        <field name="view_mode">list,form,calendar,pivot</field>
     </record>
+    <record id="view_hr_hospital_visit_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.pivot</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <pivot string="Visits by Doctor and Status">
+                <field name="doctor_id" type="row"/>
+                <field name="state" type="col"/>
+                <field name="id" type="measure" string="Count"/>
+                <field name="cost" type="measure" string="Total Cost"/>
+            </pivot>
+        </field>
+    </record>
+
+    <record id="view_hr_hospital_visit_search" model="ir.ui.view">
+        <field name="name">hr.hospital.visit.search</field>
+        <field name="model">hr.hospital.visit</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="patient_id"/>
+                <field name="doctor_id"/>
+                <field name="planned_datetime"/>
+                <field name="state"/>
+                <field name="visit_type"/>
+                <filter name="planned" string="Planned" domain="[('state', '=', 'planned')]"/>
+                <filter name="in_progress" string="In Progress" domain="[('state', '=', 'in_progress')]"/>
+                <filter name="completed" string="Completed" domain="[('state', '=', 'completed')]"/>
+                <filter name="cancelled" string="Cancelled" domain="[('state', '=', 'cancelled')]"/>
+                <filter name="no_show" string="No Show" domain="[('state', '=', 'no_show')]"/>
+                <filter name="today" string="Today" domain="[('planned_datetime', '>=', context_today().strftime('%Y-%m-%d 00:00:00')), ('planned_datetime', '&lt;', context_today().strftime('%Y-%m-%d 23:59:59'))]"/>
+                <filter name="this_week" string="This Week" domain="[('planned_datetime', '>=', (context_today() + relativedelta(weeks=-1, weekday=0)).strftime('%Y-%m-%d')), ('planned_datetime', '&lt;', (context_today() + relativedelta(weeks=0, weekday=6)).strftime('%Y-%m-%d'))]"/>
+                <filter name="this_month" string="This Month" domain="[('planned_datetime', '>=', context_today().strftime('%Y-%m-01')), ('planned_datetime', '&lt;', (context_today() + relativedelta(months=1, day=1)).strftime('%Y-%m-01'))]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_state" string="Status" context="{'group_by': 'state'}"/>
+                    <filter name="group_by_doctor" string="Doctor" context="{'group_by': 'doctor_id'}"/>
+                    <filter name="group_by_patient" string="Patient" context="{'group_by': 'patient_id'}"/>
+                    <filter name="group_by_visit_type" string="Visit Type" context="{'group_by': 'visit_type'}"/>
+                    <filter name="group_by_date" string="Date" context="{'group_by': 'planned_datetime:day'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
+    <record id="action_patient_visit_history" model="ir.actions.act_window">
+        <field name="name">Patient Visit History</field>
+        <field name="res_model">hr.hospital.visit</field>
+        <field name="view_mode">list,form</field>
+        <field name="domain">[('patient_id', '=', active_id)]</field>
+        <field name="context">{'default_patient_id': active_id}</field>
+    </record>
+
 </odoo>

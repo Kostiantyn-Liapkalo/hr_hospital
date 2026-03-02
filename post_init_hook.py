@@ -1,7 +1,9 @@
 # -*- coding: utf-8 -*-
 
-def _post_init_hook(cr, registry):
+def _post_init_hook(env):
     """Post initialization hook for the Hospital module"""
+
+    cr = env.cr
 
     # Create indexes to improve database performance
     queries = [

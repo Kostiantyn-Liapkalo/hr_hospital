@@ -10,8 +10,8 @@
                     <group>
                         <group string="Schedule Information">
                             <field name="doctor_id" required="1"/>
-                            <field name="start_date" required="1"/>
-                            <field name="end_date" required="1"/>
+                            <field name="start_week" required="1"/>
+                            <field name="weeks_count" required="1"/>
                             <field name="schedule_type" required="1"/>
                         </group>
                         <group string="Working Hours">
@@ -27,13 +27,10 @@
                             <field name="saturday"/>
                             <field name="sunday"/>
                         </group>
-                        <group string="Notes">
-                            <field name="notes"/>
-                        </group>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_create_schedule" string="Create Schedule" type="object" class="btn-primary"/>
+                    <button name="action_generate_schedule" string="Create Schedule" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

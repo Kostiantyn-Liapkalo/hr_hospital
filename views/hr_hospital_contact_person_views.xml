@@ -50,14 +50,12 @@
                     <notebook>
                         <page string="Related Patients">
                             <field name="patient_ids">
-                                <tree>
+                                <list>
                                     <field name="full_name"/>
                                     <field name="birth_date"/>
                                     <field name="phone"/>
                                     <field name="email"/>
-                                    <field name="blood_group"/>
-                                    <field name="allergies"/>
-                                </tree>
+                                </list>
                             </field>
                         </page>
                         <page string="Statistics">
@@ -116,54 +114,13 @@
         </field>
     </record>
 
-    <!-- Search View -->
-    <record id="view_hr_hospital_contact_person_search" model="ir.ui.view">
-        <field name="name">hr.hospital.contact.person.search</field>
-        <field name="model">hr.hospital.contact.person</field>
-        <field name="arch" type="xml">
-            <search string="Contact Person Search">
-                <field name="first_name"/>
-                <field name="last_name"/>
-                <field name="full_name"/>
-                <field name="relationship"/>
-                <field name="phone"/>
-                <field name="email"/>
-                <field name="emergency_contact"/>
-                <field name="can_make_decisions"/>
-                <filter string="Emergency Contacts" name="emergency_contacts" domain="[('emergency_contact', '=', True)]"/>
-                <filter string="Can Make Decisions" name="decision_makers" domain="[('can_make_decisions', '=', True)]"/>
-                <filter string="Active Contacts" name="active_contacts" domain="[('active', '=', True)]"/>
-                <filter string="Inactive Contacts" name="inactive_contacts" domain="[('active', '=', False)]"/>
-                <separator/>
-                <filter string="Parents" name="parents" domain="[('relationship', 'in', ['parent', 'mother', 'father'])]"/>
-                <filter string="Spouse" name="spouse" domain="[('relationship', '=', 'spouse')]"/>
-                <filter string="Children" name="children" domain="[('relationship', 'in', ['child', 'son', 'daughter'])]"/>
-                <filter string="Siblings" name="siblings" domain="[('relationship', 'in', ['sibling', 'brother', 'sister'])]"/>
-                <filter string="Relatives" name="relatives" domain="[('relationship', 'in', ['relative', 'uncle', 'aunt', 'cousin'])]"/>
-                <filter string="Friends" name="friends" domain="[('relationship', '=', 'friend')]"/>
-                <group expand="0" string="Group By">
-                    <group string="Relationship">
-                        <field name="relationship"/>
-                    </group>
-                    <group string="Emergency Status">
-                        <field name="emergency_contact"/>
-                    </group>
-                    <group string="Decision Rights">
-                        <field name="can_make_decisions"/>
-                    </group>
-                </group>
-            </search>
-        </field>
-    </record>
-
+    
     <!-- Action -->
     <record id="action_hr_hospital_contact_person" model="ir.actions.act_window">
         <field name="name">Contact Persons</field>
         <field name="res_model">hr.hospital.contact.person</field>
         <field name="view_mode">tree,kanban,form</field>
         <field name="view_id" ref="view_hr_hospital_contact_person_tree"/>
-        <field name="kanban_view_id" ref="view_hr_hospital_contact_person_kanban"/>
-        <field name="search_view_id" ref="view_hr_hospital_contact_person_search"/>
         <field name="help">Manage contact persons for patients</field>
     </record>
 

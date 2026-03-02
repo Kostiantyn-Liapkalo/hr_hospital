@@ -10,13 +10,14 @@
                     <group>
                         <group string="Visit Information">
                             <field name="visit_id" readonly="1"/>
-                            <field name="new_datetime" required="1"/>
+                            <field name="new_date" required="1"/>
+                            <field name="new_time" required="1" widget="float_time"/>
                             <field name="reason" required="1"/>
                         </group>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_reschedule" string="Reschedule" type="object" class="btn-primary"/>
+                    <button name="action_reschedule_visit" string="Reschedule" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

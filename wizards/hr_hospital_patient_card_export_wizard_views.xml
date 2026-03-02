@@ -18,13 +18,13 @@
                         <group string="Export Options">
                             <field name="include_diagnoses"/>
                             <field name="include_recommendations"/>
-                            <field name="report_language"/>
+                            <field name="lang_id"/>
                             <field name="export_format" required="1"/>
                         </group>
                     </group>
                 </sheet>
                 <footer>
-                    <button name="action_export" string="Export" type="object" class="btn-primary"/>
+                    <button name="action_export_patient_card" string="Export" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>
@@ -34,7 +34,6 @@
     <record id="action_hr_hospital_patient_card_export_wizard" model="ir.actions.act_window">
         <field name="name">Export Patient Card</field>
         <field name="res_model">hr.hospital.patient.card.export.wizard</field>
-        <field name="name">hr.hospital.patient.card.export.wizard.form</field>
         <field name="view_mode">form</field>
         <field name="target">new</field>
     </record>

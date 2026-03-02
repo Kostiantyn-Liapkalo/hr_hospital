@@ -223,5 +223,49 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Scheduled orthopedic surgery.</field>
         </record>
+        <record id="visit_demo_new_1" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_emily_davis"/>
+            <field name="doctor_id" ref="doctor_john_smith"/>
+            <field name="planned_datetime" eval="datetime.now() + timedelta(days=1, hours=9)"/>
+            <field name="visit_type">first</field>
+            <field name="state">planned</field>
+            <field name="cost">200.0</field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="recommendations">Initial consultation for new patient with hypertension.</field>
+        </record>
+        
+        <record id="visit_demo_new_2" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_robert_taylor"/>
+            <field name="doctor_id" ref="doctor_emily_jones"/>
+            <field name="planned_datetime" eval="datetime.now() + timedelta(days=3, hours=11)"/>
+            <field name="visit_type">preventive</field>
+            <field name="state">planned</field>
+            <field name="cost">120.0</field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="recommendations">Preventive checkup for respiratory health.</field>
+        </record>
+        
+        <record id="visit_demo_new_3" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_lisa_chen"/>
+            <field name="doctor_id" ref="doctor_michael_brown"/>
+            <field name="planned_datetime" eval="datetime.now() + timedelta(days=5, hours=15)"/>
+            <field name="visit_type">follow_up</field>
+            <field name="state">planned</field>
+            <field name="cost">150.0</field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="recommendations">Follow-up for diabetes management and medication adjustment.</field>
+        </record>
+        
+        <record id="visit_demo_new_4" model="hr.hospital.visit">
+            <field name="patient_id" ref="patient_alex_kumar"/>
+            <field name="doctor_id" ref="doctor_sarah_wilson"/>
+            <field name="planned_datetime" eval="datetime.now() + timedelta(days=7, hours=10)"/>
+            <field name="visit_type">consultation</field>
+            <field name="state">planned</field>
+            <field name="cost">180.0</field>
+            <field name="currency_id" ref="base.USD"/>
+            <field name="recommendations">Orthopedic consultation for joint pain evaluation.</field>
+        </record>
+        
     </data>
 </odoo>

@@ -171,3 +171,38 @@ class HrHospitalDiseaseReportWizard(models.TransientModel):
             }
         }
 
+    def action_generate_monthly_report(self):
+        """Generate monthly disease report - show actual diagnosis records"""
+        self.ensure_one()
+
+        # Date validation
+        if self.start_date > self.end_date:
+            raise ValidationError(_('Start date cannot be later than end date.'))
+
+        # Domain formation for diagnoses
+        domain = [
+            ('diagnosis_date', '>=', self.start_date),
+            ('diagnosis_date', '<=', self.end_date),
+        ]
+
+        # Apply optional filters
+        if self.disease_ids:
+            domain.append(('disease_id', 'in', self.disease_ids.ids))
+
+        if self.doctor_ids:
+            domain.append(('doctor_id', 'in', self.doctor_ids.ids))
+
+        # Return action to open diagnoses list with grouping by disease
+        return {
+            'name': _('Monthly Disease Report (%s - %s)') % (self.start_date, self.end_date),
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.diagnosis',
+            'view_mode': 'list,form,pivot',
+            'domain': domain,
+            'context': {
+                'default_start_date': self.start_date,
+                'default_end_date': self.end_date,
+                'group_by': 'disease_id',
+                'search_default_group_by_disease': 1,
+            }
+        }

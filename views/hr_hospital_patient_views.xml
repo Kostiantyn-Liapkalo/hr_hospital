@@ -5,9 +5,9 @@
         <field name="model">hr.hospital.patient</field>
         <field name="arch" type="xml">
             <list>
-                <field name="name"/>
+                <field name="full_name"/>
                 <field name="age"/>
-                <field name="doctor_id"/>
+                <field name="personal_doctor_id"/>
             </list>
         </field>
     </record>
@@ -18,11 +18,66 @@
         <field name="arch" type="xml">
             <form>
                 <sheet>
+                    <div class="oe_button_box" name="button_box">
+                        <button name="%(action_hr_hospital_visit)d" string="Visits" type="action" class="oe_stat_button" icon="fa-calendar-check-o">
+                            <field name="total_visits" widget="statinfo" string="Visits"/>
+                        </button>
+                        <button name="action_create_quick_visit" string="Quick Visit" type="object" class="oe_stat_button" icon="fa-plus"/>
+                        <button name="%(action_patient_visit_history)d" string="Visit History" type="action" class="oe_stat_button" icon="fa-history"/>
+                    </div>
+                    <div class="oe_title">
+                        <h1>
+                            <field name="full_name" placeholder="Patient Name..."/>
+                        </h1>
+                    </div>
                     <group>
-                        <field name="name"/>
-                        <field name="age"/>
-                        <field name="doctor_id"/>
+                        <group string="Personal Information">
+                            <field name="age"/>
+                            <field name="birth_date"/>
+                            <field name="gender"/>
+                            <field name="blood_group"/>
+                            <field name="passport"/>
+                            <field name="phone"/>
+                            <field name="email"/>
+                        </group>
+                        <group string="Medical Information">
+                            <field name="personal_doctor_id"/>
+                            <field name="allergies"/>
+                            <field name="chronic_diseases"/>
+                            <field name="last_visit_date" readonly="1"/>
+                        </group>
                     </group>
+                    <notebook>
+                        <page string="Visits">
+                            <field name="visit_ids" readonly="1">
+                                <list>
+                                    <field name="planned_datetime"/>
+                                    <field name="doctor_id"/>
+                                    <field name="state"/>
+                                    <field name="visit_type"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Diagnoses">
+                            <field name="diagnosis_ids" readonly="1">
+                                <list>
+                                    <field name="diagnosis_date"/>
+                                    <field name="disease_id"/>
+                                    <field name="doctor_id"/>
+                                    <field name="is_approved"/>
+                                </list>
+                            </field>
+                        </page>
+                        <page string="Doctor History">
+                            <field name="doctor_history_ids" readonly="1">
+                                <list>
+                                    <field name="doctor_id"/>
+                                    <field name="assignment_date"/>
+                                    <field name="active"/>
+                                </list>
+                            </field>
+                        </page>
+                    </notebook>
                 </sheet>
             </form>
         </field>
@@ -33,4 +88,26 @@
         <field name="res_model">hr.hospital.patient</field>
         <field name="view_mode">list,form</field>
     </record>
+    <record id="view_hr_hospital_patient_search" model="ir.ui.view">
+        <field name="name">hr.hospital.patient.search</field>
+        <field name="model">hr.hospital.patient</field>
+        <field name="arch" type="xml">
+            <search>
+                <field name="full_name" string="Full Name" filter_domain="[('full_name', 'ilike', self)]"/>
+                <field name="phone" string="Phone" filter_domain="[('phone', 'ilike', self)]"/>
+                <field name="passport"/>
+                <field name="email"/>
+                <field name="personal_doctor_id"/>
+                <separator/>
+                <filter name="has_doctor" string="Has Personal Doctor" domain="[('personal_doctor_id', '!=', False)]"/>
+                <filter name="no_doctor" string="No Personal Doctor" domain="[('personal_doctor_id', '=', False)]"/>
+                <separator/>
+                <group expand="0" string="Group By">
+                    <filter name="group_by_doctor" string="Personal Doctor" context="{'group_by': 'personal_doctor_id'}"/>
+                    <filter name="group_by_blood_group" string="Blood Group" context="{'group_by': 'blood_group'}"/>
+                </group>
+            </search>
+        </field>
+    </record>
+
 </odoo>

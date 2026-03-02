@@ -7,7 +7,7 @@ from datetime import date
 class HrHospitalPatient(models.Model):
     _name = 'hr.hospital.patient'
     _description = 'Patient'
-    _inherit = ['abstract.person']
+    _inherit = ['hr.hospital.abstract.person']
     _order = 'last_name, first_name'
 
     # Personal Doctor
@@ -287,3 +287,29 @@ class HrHospitalPatient(models.Model):
             
         patients = self.search(domain, limit=limit)
         return patients.name_get()
+
+    def action_create_quick_visit(self):
+        """Create a quick visit to personal doctor from patient card"""
+        self.ensure_one()
+        if not self.personal_doctor_id:
+            raise UserError(_('Please assign a personal doctor first.'))
+        
+        # Create visit with default values
+        visit = self.env['hr.hospital.visit'].create({
+            'patient_id': self.id,
+            'doctor_id': self.personal_doctor_id.id,
+            'visit_type': 'first' if not self.visit_ids else 'follow_up',
+            'planned_datetime': fields.Datetime.now() + timedelta(days=1, hours=9),
+            'state': 'planned',
+        })
+        
+        # Return action to open the created visit
+        return {
+            'name': _('Visit'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'res_id': visit.id,
+            'view_mode': 'form',
+            'view_type': 'form',
+            'target': 'current',
+        }

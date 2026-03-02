@@ -44,44 +44,13 @@
         </field>
     </record>
 
-    <!-- Search View -->
-    <record id="view_hr_hospital_patient_doctor_history_search" model="ir.ui.view">
-        <field name="name">hr.hospital.patient.doctor.history.search</field>
-        <field name="model">hr.hospital.patient.doctor.history</field>
-        <field name="arch" type="xml">
-            <search string="Patient Doctor History Search">
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="assignment_date"/>
-                <field name="change_date"/>
-                <field name="active"/>
-                <filter string="Active Assignments" name="active_assignments" domain="[('active', '=', True)]"/>
-                <filter string="Inactive Assignments" name="inactive_assignments" domain="[('active', '=', False)]"/>
-                <separator/>
-                <filter string="Assignment Date This Month" name="this_month" domain="[('assignment_date', '>=', (context_today() - relativedelta(months=-1)).strftime('%Y-%m-%d'))]"/>
-                <filter string="Assignment Date Last 30 Days" name="last_30_days" domain="[('assignment_date', '>=', (context_today() - relativedelta(days=-30)).strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
-                    <group string="Patient">
-                        <field name="patient_id"/>
-                    </group>
-                    <group string="Doctor">
-                        <field name="doctor_id"/>
-                    </group>
-                    <group string="Assignment Date">
-                        <field name="assignment_date"/>
-                    </group>
-                </group>
-            </search>
-        </field>
-    </record>
-
+    
     <!-- Action -->
     <record id="action_hr_hospital_patient_doctor_history" model="ir.actions.act_window">
         <field name="name">Patient Doctor History</field>
         <field name="res_model">hr.hospital.patient.doctor.history</field>
         <field name="view_mode">tree,form</field>
         <field name="view_id" ref="view_hr_hospital_patient_doctor_history_tree"/>
-        <field name="search_view_id" ref="view_hr_hospital_patient_doctor_history_search"/>
         <field name="help">View and manage the history of personal doctor assignments for patients</field>
     </record>
 

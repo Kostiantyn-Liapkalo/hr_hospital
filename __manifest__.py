@@ -1,11 +1,7 @@
 {
     'name': 'Hospital Automation',
-    'summary': 'Manage doctors, patients, diseases and visits',
-    'description': """
-        Hospital Automation Module
-        ==========================
-        This module provides hospital management functionality.
-    """,
+    'summary': 'Hospital management system',
+    'description': '<div>Hospital management system</div>',
     'author': 'Kostiantyn Liapkalo',
     'website': 'https://github.com/kostiantyn-liapkalo',
     'category': 'Human Resources',
@@ -18,7 +14,6 @@
         'data/hr_hospital_doctor_speciality_data.xml',
         'data/hr_hospital_disease_data.xml',
 
-        'views/hr_hospital_abstract_person_views.xml',
         'views/hr_hospital_contact_person_views.xml',
         'views/hr_hospital_disease_views.xml',
         'views/hr_hospital_doctor_views.xml',

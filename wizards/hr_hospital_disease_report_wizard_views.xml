@@ -25,6 +25,7 @@
                 </sheet>
                 <footer>
                     <button name="action_generate_report" string="Generate Report" type="object" class="btn-primary"/>
+                    <button name="action_generate_monthly_report" string="Monthly Report (View Records)" type="object" class="btn-info"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

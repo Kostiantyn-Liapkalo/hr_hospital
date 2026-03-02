@@ -9,7 +9,7 @@ from odoo import _
 class HrHospitalDoctor(models.Model):
     _name = 'hr.hospital.doctor'
     _description = 'Doctor'
-    _inherit = ['abstract.person']
+    _inherit = ['hr.hospital.abstract.person']
     _order = 'last_name, first_name'
 
     # System User
@@ -35,6 +35,14 @@ class HrHospitalDoctor(models.Model):
         'hr.hospital.doctor',
         string='Mentor Doctor',
         domain="[('is_intern', '=', False), ('id', '!=', id)]"
+    )
+
+    # Interns (for mentor doctors)
+    intern_ids = fields.One2many(
+        'hr.hospital.doctor',
+        'mentor_id',
+        string='Interns',
+        readonly=True
     )
 
     # License
@@ -261,4 +269,23 @@ class HrHospitalDoctor(models.Model):
             ('study_country_id.code', '=', country_code),
             ('active', '=', True)
         ])
+
+    def action_create_quick_visit_from_doctor(self):
+        """Create a quick visit to this doctor from kanban card"""
+        self.ensure_one()
+        
+        # Open wizard or form to select patient and create visit
+        return {
+            'name': _('Create Visit'),
+            'type': 'ir.actions.act_window',
+            'res_model': 'hr.hospital.visit',
+            'view_mode': 'form',
+            'target': 'new',
+            'context': {
+                'default_doctor_id': self.id,
+                'default_planned_datetime': fields.Datetime.now() + timedelta(days=1, hours=9),
+                'default_visit_type': 'consultation',
+                'default_state': 'planned',
+            }
+        }
 

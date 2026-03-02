@@ -14,7 +14,7 @@
                     <field name="reason" required="1"/>
                 </group>
                 <footer>
-                    <button name="action_mass_reassign" string="Reassign" type="object" class="btn-primary"/>
+                    <button name="action_reassign_doctor" string="Reassign" type="object" class="btn-primary"/>
                     <button string="Cancel" class="btn-secondary" special="cancel"/>
                 </footer>
             </form>

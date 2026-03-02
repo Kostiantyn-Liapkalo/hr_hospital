@@ -102,6 +102,13 @@ class HrHospitalVisit(models.Model):
         store=True
     )
 
+    # Doctor diagnosis history - computed field
+    doctor_diagnosis_history_ids = fields.Many2many(
+        'hr.hospital.diagnosis',
+        compute='_compute_doctor_diagnosis_history',
+        string='Doctor Diagnosis History'
+    )
+
     # SQL Constraints - Odoo 19.0 format
     sql_constraints = [
         ('check_planned_not_past',
@@ -217,6 +224,16 @@ class HrHospitalVisit(models.Model):
     def _compute_diagnosis_count(self):
         for visit in self:
             visit.diagnosis_count = len(visit.diagnosis_ids)
+
+    @api.depends('doctor_id')
+    def _compute_doctor_diagnosis_history(self):
+        for visit in self:
+            if visit.doctor_id:
+                visit.doctor_diagnosis_history_ids = self.env['hr.hospital.diagnosis'].search([
+                    ('doctor_id', '=', visit.doctor_id.id)
+                ], order='diagnosis_date desc', limit=50)
+            else:
+                visit.doctor_diagnosis_history_ids = False
 
     # Display name computation
     @api.depends('patient_id', 'doctor_id', 'planned_datetime')

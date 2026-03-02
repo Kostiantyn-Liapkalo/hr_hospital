@@ -82,18 +82,9 @@
                 <filter string="With Email" name="with_email" domain="[('email', '!=', False)]"/>
                 <filter string="Complete Contact Info" name="complete_contact" domain="[('phone', '!=', False), ('email', '!=', False)]"/>
                 <group expand="0" string="Group By">
-                    <group string="Gender">
-                        <field name="gender"/>
-                    </group>
-                    <group string="Country">
-                        <field name="country_id"/>
-                    </group>
-                    <group string="Language">
-                        <field name="lang_id"/>
-                    </group>
-                    <group string="Age Range">
-                        <field name="age" interval="10"/>
-                    </group>
+                    <filter string="Gender" name="group_gender" context="{'group_by': 'gender'}"/>
+                    <filter string="Country" name="group_country" context="{'group_by': 'country_id'}"/>
+                    <filter string="Language" name="group_lang" context="{'group_by': 'lang_id'}"/>
                 </group>
             </search>
         </field>

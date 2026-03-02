@@ -10,14 +10,19 @@
             <list string="Diagnoses">
                 <field name="name" string="Reference"/>
                 <field name="visit_id" string="Visit"/>
-                <field name="patient_id" string="Patient" related="visit_id.patient_id"/>
-                <field name="doctor_id" string="Doctor" related="visit_id.doctor_id"/>
+                <field name="patient_id" string="Patient"/>
+                <field name="doctor_id" string="Doctor"/>
                 <field name="disease_id" string="Disease"/>
                 <field name="severity" string="Severity"/>
                 <field name="diagnosis_date" string="Date"/>
                 <field name="is_approved" string="Approved"/>
                 <field name="approved_doctor_id" string="Approved By"/>
                 <field name="approval_date" string="Approval Date"/>
+                <searchpanel>
+                    <field name="disease_id" string="Disease" enable_counters="1" hierarchize="1"/>
+                    <field name="severity" string="Severity" enable_counters="1"/>
+                    <field name="is_approved" string="Approval Status" enable_counters="1"/>
+                </searchpanel>
             </list>
         </field>
     </record>
@@ -43,7 +48,7 @@
                         </group>
                         <group string="Approval Information">
                             <field name="is_approved"/>
-                            <field name="approved_doctor_id" readonly="1" attrs="{'readonly': [('is_approved', '=', False)]}"/>
+                            <field name="approved_doctor_id" readonly="1" invisible="not is_approved"/>
                             <field name="approval_date" readonly="1"/>
                         </group>
                     </group>
@@ -94,57 +99,29 @@
         </field>
     </record>
 
-    <!-- Search View -->
-    <record id="view_hr_hospital_diagnosis_search" model="ir.ui.view">
-        <field name="name">hr.hospital.diagnosis.search</field>
+    <!-- Pivot View -->
+    <record id="view_hr_hospital_diagnosis_pivot" model="ir.ui.view">
+        <field name="name">hr.hospital.diagnosis.pivot</field>
         <field name="model">hr.hospital.diagnosis</field>
         <field name="arch" type="xml">
-            <search string="Diagnosis Search">
-                <field name="visit_id"/>
-                <field name="patient_id"/>
-                <field name="doctor_id"/>
-                <field name="disease_id"/>
-                <field name="severity"/>
-                <field name="diagnosis_date"/>
-                <field name="is_approved"/>
-                <field name="approved_doctor_id"/>
-                <filter string="Approved Diagnoses" name="approved" domain="[('is_approved', '=', True)]"/>
-                <filter string="Pending Approval" name="pending" domain="[('is_approved', '=', False)]"/>
-                <filter string="My Diagnoses" name="my_diagnoses" domain="[('doctor_id.user_id', '=', uid)]"/>
-                <separator/>
-                <filter string="Today" name="today" domain="[('diagnosis_date', '>=', context_today().strftime('%Y-%m-%d'))]"/>
-                <filter string="This Week" name="this_week" domain="[('diagnosis_date', '>=', (context_today() - datetime.timedelta(days=context_today().weekday())).strftime('%Y-%m-%d'))]"/>
-                <filter string="This Month" name="this_month" domain="[('diagnosis_date', '>=', (context_today() - relativedelta(months=-1)).strftime('%Y-%m-%d'))]"/>
-                <filter string="Last 30 Days" name="last_30_days" domain="[('diagnosis_date', '>=', (context_today() - datetime.timedelta(days=30)).strftime('%Y-%m-%d'))]"/>
-                <group expand="0" string="Group By">
-                    <group string="Patient">
-                        <field name="patient_id"/>
-                    </group>
-                    <group string="Doctor">
-                        <field name="doctor_id"/>
-                    </group>
-                    <group string="Disease">
-                        <field name="disease_id"/>
-                    </group>
-                    <group string="Severity">
-                        <field name="severity"/>
-                    </group>
-                    <group string="Approval Status">
-                        <field name="is_approved"/>
-                    </group>
-                </group>
-            </search>
+            <pivot string="Diagnoses Analysis">
+                <field name="disease_id" type="row"/>
+                <field name="severity" type="row"/>
+                <field name="diagnosis_date" type="col" interval="year"/>
+                <field name="diagnosis_date" type="col" interval="month"/>
+                <field name="id" type="measure" string="Count"/>
+                <field name="patient_id" type="measure" string="Unique Patients" aggregator="count_distinct"/>
+            </pivot>
         </field>
     </record>
 
+    
     <!-- Action -->
     <record id="action_hr_hospital_diagnosis" model="ir.actions.act_window">
         <field name="name">Medical Diagnoses</field>
         <field name="res_model">hr.hospital.diagnosis</field>
-        <field name="view_mode">tree,kanban,form</field>
+        <field name="view_mode">tree,kanban,form,pivot</field>
         <field name="view_id" ref="view_hr_hospital_diagnosis_tree"/>
-        <field name="kanban_view_id" ref="view_hr_hospital_diagnosis_kanban"/>
-        <field name="search_view_id" ref="view_hr_hospital_diagnosis_search"/>
         <field name="help">Manage medical diagnoses and treatments</field>
     </record>
 
