@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Doctor Schedule Views -->
-    
+
     <!-- List View -->
     <record id="view_hr_hospital_doctor_schedule_tree" model="ir.ui.view">
         <field name="name">hr.hospital.doctor.schedule.tree</field>
@@ -33,10 +33,10 @@
                             <field name="schedule_type" required="1"/>
                         </group>
                         <group string="Schedule Details">
-                            <field name="day_of_week" 
+                            <field name="day_of_week"
                                    invisible="specific_date"
                                    required="1"/>
-                            <field name="specific_date" 
+                            <field name="specific_date"
                                    invisible="not specific_date"
                                    string="Specific Date"/>
                             <field name="start_time" required="1"/>
@@ -58,8 +58,8 @@
         <field name="model">hr.hospital.doctor.schedule</field>
         <field name="priority">2</field>
         <field name="arch" type="xml">
-            <calendar string="Doctor Schedule Calendar" 
-                     date_start="start_time" 
+            <calendar string="Doctor Schedule Calendar"
+                     date_start="start_time"
                      date_stop="end_time"
                      mode="month"
                      color="schedule_type">
@@ -71,7 +71,7 @@
         </field>
     </record>
 
-    
+
     <!-- Action -->
     <record id="action_hr_hospital_doctor_schedule" model="ir.actions.act_window">
         <field name="name">Doctor Schedules</field>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Abstract Person Views (for inheritance demonstration) -->
-    
+
     <!-- List View -->
     <record id="view_hr_hospital_abstract_person_tree" model="ir.ui.view">
         <field name="name">hr.hospital.abstract.person.tree</field>

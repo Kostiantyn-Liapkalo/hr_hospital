@@ -19,7 +19,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=5)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_hypertension" model="hr.hospital.diagnosis">
             <field name="name">DIAG002</field>
             <field name="visit_id" ref="demo_visit_2"/>
@@ -38,7 +38,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=10)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_fracture" model="hr.hospital.diagnosis">
             <field name="name">DIAG003</field>
             <field name="visit_id" ref="demo_visit_3"/>
@@ -57,7 +57,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=2)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_allergy" model="hr.hospital.diagnosis">
             <field name="name">DIAG004</field>
             <field name="visit_id" ref="demo_visit_4"/>
@@ -76,7 +76,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=7)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <!-- Unapproved diagnosis from intern -->
         <record id="diagnosis_intern_unapproved" model="hr.hospital.diagnosis">
             <field name="name">DIAG005</field>
@@ -95,7 +95,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=1)"/>
             <field name="is_approved">False</field>
         </record>
-        
+
         <!-- Additional Demo Diagnoses -->
         <record id="diagnosis_asthma" model="hr.hospital.diagnosis">
             <field name="name">DIAG006</field>
@@ -115,7 +115,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=15)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_diabetes_type2" model="hr.hospital.diagnosis">
             <field name="name">DIAG007</field>
             <field name="visit_id" ref="visit_planned_3"/>
@@ -134,7 +134,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=20)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_migraine" model="hr.hospital.diagnosis">
             <field name="name">DIAG008</field>
             <field name="visit_id" ref="visit_completed_2"/>
@@ -153,7 +153,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=8)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_pneumonia" model="hr.hospital.diagnosis">
             <field name="name">DIAG009</field>
             <field name="visit_id" ref="visit_in_progress_1"/>
@@ -172,7 +172,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=2)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_allergic_rhinitis" model="hr.hospital.diagnosis">
             <field name="name">DIAG010</field>
             <field name="visit_id" ref="visit_completed_3"/>
@@ -191,7 +191,7 @@
             <field name="diagnosis_date" eval="DateTime.now() - timedelta(days=12)"/>
             <field name="is_approved">True</field>
         </record>
-        
+
         <record id="diagnosis_anemia" model="hr.hospital.diagnosis">
             <field name="name">DIAG011</field>
             <field name="visit_id" ref="visit_no_show_1"/>

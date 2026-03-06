@@ -1,0 +1,359 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <template id="hr_hospital_doctor_report_template">
+        <t t-call="web.html_container">
+            <t t-set="paperformat" t-value="env.ref('base.paperformat_euro').sudo().write({'margin_top': 20, 'margin_bottom': 20, 'margin_left': 15, 'margin_right': 15, 'header_line': False, 'header_spacing': 10})"/>
+            <t t-foreach="docs" t-as="doctor">
+                <div class="page" style="font-size: 12px; font-family: Arial, sans-serif;">
+                    <!-- Header with Company Information -->
+                    <div style="border-bottom: 2px solid #009688; margin-bottom: 20px; padding-bottom: 15px;">
+                        <table style="width: 100%;">
+                            <tr>
+                                <td style="width: 20%; text-align: center; vertical-align: top;">
+                                    <img t-if="company.logo" t-att-src="'data:image/png;base64,%s' % company.logo"
+                                         style="max-width: 120px; max-height: 80px;" alt="Company Logo"/>
+                                    <div t-if="not company.logo" style="width: 120px; height: 80px; border: 1px solid #ccc; display: flex; align-items: center; justify-content: center; background-color: #f5f5f5;">
+                                        <span style="color: #999; font-size: 12px;">No Logo</span>
+                                    </div>
+                                </td>
+                                <td style="width: 80%; padding-left: 20px; vertical-align: top;">
+                                    <h1 style="margin: 0; color: #009688; font-size: 24px; font-weight: bold;">
+                                        <t t-esc="company.name"/>
+                                    </h1>
+                                    <div style="margin-top: 5px;">
+                                        <p style="margin: 3px 0; font-size: 12px; color: #666;">
+                                            <strong>Address:</strong> <t t-esc="company.street or ''"/>
+                                            <t t-if="company.street2">, <t t-esc="company.street2"/></t>
+                                            <t t-if="company.city">, <t t-esc="company.city"/></t>
+                                            <t t-if="company.state_id">, <t t-esc="company.state_id.name"/></t>
+                                            <t t-if="company.zip">, <t t-esc="company.zip"/></t>
+                                        </p>
+                                        <p style="margin: 3px 0; font-size: 12px; color: #666;">
+                                            <strong>Phone:</strong> <t t-esc="company.phone or 'N/A'"/>
+                                        </p>
+                                        <p style="margin: 3px 0; font-size: 12px; color: #666;">
+                                            <strong>Email:</strong> <t t-esc="company.email or 'N/A'"/>
+                                        </p>
+                                        <p style="margin: 3px 0; font-size: 12px; color: #666;">
+                                            <strong>Website:</strong> <t t-esc="company.website or 'N/A'"/>
+                                        </p>
+                                    </div>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Report Title -->
+                    <div style="text-align: center; margin-bottom: 30px;">
+                        <h2 style="color: #333; margin: 0; font-size: 20px;">DOCTOR INFORMATION REPORT</h2>
+                        <h3 style="color: #009688; margin: 10px 0; font-size: 18px;">
+                            <t t-esc="doctor.full_name"/> - <t t-esc="doctor.speciality_id.name or 'N/A'"/>
+                        </h3>
+                        <p style="margin: 5px 0; color: #666; font-size: 12px;">Generated on: <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/></p>
+                    </div>
+
+                    <!-- Doctor Basic Information -->
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #009688; border-bottom: 1px solid #009688; padding-bottom: 5px; font-size: 16px;">
+                            Personal Information
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Full Name:</strong>
+                                </td>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.full_name"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Date of Birth:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.birth_date or 'N/A'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Age:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.age or 'N/A'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Gender:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="dict(doctor._fields['gender'].selection).get(doctor.gender, doctor.gender)"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Phone:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.phone or 'N/A'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Email:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.email or 'N/A'"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Professional Information -->
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #009688; border-bottom: 1px solid #009688; padding-bottom: 5px; font-size: 16px;">
+                            Professional Information
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Specialty:</strong>
+                                </td>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.speciality_id.name or 'N/A'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>License Number:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.license_number"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>License Issue Date:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.license_date"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Experience:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.experience"/> years
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Rating:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.rating"/>/5.00
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Country of Study:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.study_country_id.name or 'N/A'"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Intern Status:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <span t-if="doctor.is_intern" style="color: #f39c12; font-weight: bold;">Yes</span>
+                                    <span t-else="" style="color: #27ae60; font-weight: bold;">No</span>
+                                </td>
+                            </tr>
+                            <tr t-if="doctor.is_intern and doctor.mentor_id">
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Mentor:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.mentor_id.full_name"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Statistics -->
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #009688; border-bottom: 1px solid #009688; padding-bottom: 5px; font-size: 16px;">
+                            Statistics
+                        </h3>
+                        <table style="width: 100%; border-collapse: collapse;">
+                            <tr>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Active Patients:</strong>
+                                </td>
+                                <td style="width: 50%; padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.active_patients_count"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Upcoming Visits:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="doctor.upcoming_visits_count"/>
+                                </td>
+                            </tr>
+                            <tr>
+                                <td style="padding: 8px; border: 1px solid #ddd; background-color: #f9f9f9;">
+                                    <strong>Total Interns:</strong>
+                                </td>
+                                <td style="padding: 8px; border: 1px solid #ddd;">
+                                    <t t-esc="len(doctor.intern_ids)"/>
+                                </td>
+                            </tr>
+                        </table>
+                    </div>
+
+                    <!-- Patients List -->
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #009688; border-bottom: 1px solid #009688; padding-bottom: 5px; font-size: 16px;">
+                            Patients List
+                        </h3>
+                        <t t-set="patients" t-value="doctor.patient_ids"/>
+                        <t t-if="patients">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #009688; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Patient Name</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Gender</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Date of Birth</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Phone</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Current Visit Status</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="patients" t-as="patient">
+                                        <tr>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="patient.full_name or 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="dict(patient._fields['gender'].selection).get(patient.gender, patient.gender) if patient.gender else 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="patient.birth_date or 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="patient.phone or 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-set="latest_visit" t-value="patient.visit_ids.filtered(lambda v: v.doctor_id.id == doctor.id).sorted('planned_datetime', reverse=True)[:1]"/>
+                                                <t t-if="latest_visit">
+                                                    <t t-set="visit" t-value="latest_visit[0]"/>
+                                                    <span t-if="visit.state == 'planned'" style="background-color: #f1c40f; color: #333; padding: 4px 8px; border-radius: 3px; font-weight: bold; display: inline-block;">
+                                                        Заплановано
+                                                    </span>
+                                                    <span t-elif="visit.state == 'completed'" style="background-color: #27ae60; color: white; padding: 4px 8px; border-radius: 3px; font-weight: bold; display: inline-block;">
+                                                        Завершено
+                                                    </span>
+                                                    <span t-elif="visit.state == 'cancelled'" style="background-color: #e74c3c; color: white; padding: 4px 8px; border-radius: 3px; font-weight: bold; display: inline-block;">
+                                                        Скасовано
+                                                    </span>
+                                                    <span t-elif="visit.state == 'in_progress'" style="background-color: #3498db; color: white; padding: 4px 8px; border-radius: 3px; font-weight: bold; display: inline-block;">
+                                                        В процесі
+                                                    </span>
+                                                    <span t-else="" style="color: #666;">
+                                                        <t t-esc="visit.state or 'N/A'"/>
+                                                    </span>
+                                                </t>
+                                                <t t-else="">
+                                                    <span style="color: #999; font-style: italic;">No visits</span>
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p style="color: #666; font-style: italic;">No patients assigned to this doctor.</p>
+                        </t>
+                    </div>
+
+                    <!-- Visit History -->
+                    <div style="margin-bottom: 25px;">
+                        <h3 style="color: #009688; border-bottom: 1px solid #009688; padding-bottom: 5px; font-size: 16px;">
+                            Visit History
+                        </h3>
+                        <t t-set="visits" t-value="doctor.visit_ids.sorted('planned_datetime', reverse=True)"/>
+                        <t t-if="visits">
+                            <table style="width: 100%; border-collapse: collapse;">
+                                <thead>
+                                    <tr style="background-color: #009688; color: white;">
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Date & Time</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Patient</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Visit Type</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Status</th>
+                                        <th style="padding: 8px; border: 1px solid #ddd; text-align: left;">Diagnosis</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    <t t-foreach="visits" t-as="visit">
+                                        <tr>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="visit.planned_datetime or 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="visit.patient_id.full_name or 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-esc="dict(doctor._fields.get('visit_type', {}).selection).get(visit.visit_type, visit.visit_type) if visit.visit_type else 'N/A'"/>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <span t-if="visit.state == 'completed'" style="color: #27ae60; font-weight: bold;">Completed</span>
+                                                <span t-elif="visit.state == 'in_progress'" style="color: #f39c12; font-weight: bold;">In Progress</span>
+                                                <span t-elif="visit.state == 'planned'" style="color: #3498db; font-weight: bold;">Planned</span>
+                                                <span t-elif="visit.state == 'cancelled'" style="color: #e74c3c; font-weight: bold;">Cancelled</span>
+                                                <span t-else="" style="color: #666;"><t t-esc="visit.state or 'N/A'"/></span>
+                                            </td>
+                                            <td style="padding: 8px; border: 1px solid #ddd;">
+                                                <t t-if="visit.diagnosis_ids">
+                                                    <t t-foreach="visit.diagnosis_ids" t-as="diagnosis">
+                                                        <div style="margin-bottom: 2px;">
+                                                            <t t-esc="diagnosis.disease_id.name or 'N/A'"/>
+                                                            <t t-if="diagnosis.severity">
+                                                                <span style="color: #666; font-size: 11px;"> (Severity: <t t-esc="diagnosis.severity"/>)</span>
+                                                            </t>
+                                                        </div>
+                                                    </t>
+                                                </t>
+                                                <t t-else="">
+                                                    No diagnosis
+                                                </t>
+                                            </td>
+                                        </tr>
+                                    </t>
+                                </tbody>
+                            </table>
+                        </t>
+                        <t t-else="">
+                            <p style="color: #666; font-style: italic;">No visit history available.</p>
+                        </t>
+                    </div>
+
+                    <!-- Footer -->
+                    <div style="margin-top: 40px; padding-top: 20px; border-top: 1px solid #ccc; text-align: center; font-size: 10px; color: #999;">
+                        <p style="margin: 0;">This report was generated automatically by the Hospital Management System</p>
+                        <p style="margin: 5px 0;">
+                            <strong>Print Date & Time:</strong> <t t-esc="context_timestamp(datetime.datetime.now()).strftime('%Y-%m-%d %H:%M:%S')"/>
+                            <t t-if="company.city"> | <strong>City:</strong> <t t-esc="company.city"/></t>
+                        </p>
+                        <p style="margin: 5px 0 0 0;">Page <span class="page"/> of <span class="topage"/></p>
+                    </div>
+                </div>
+            </t>
+        </t>
+    </template>
+</odoo>

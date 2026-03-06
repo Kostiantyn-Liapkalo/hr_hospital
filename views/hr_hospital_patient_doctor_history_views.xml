@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Patient Doctor History Views -->
-    
+
     <!-- List View -->
     <record id="view_hr_hospital_patient_doctor_history_tree" model="ir.ui.view">
         <field name="name">hr.hospital.patient.doctor.history.tree</field>
@@ -44,7 +44,7 @@
         </field>
     </record>
 
-    
+
     <!-- Action -->
     <record id="action_hr_hospital_patient_doctor_history" model="ir.actions.act_window">
         <field name="name">Patient Doctor History</field>

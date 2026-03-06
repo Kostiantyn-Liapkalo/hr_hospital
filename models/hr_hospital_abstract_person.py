@@ -1,17 +1,13 @@
 # -*- coding: utf-8 -*-
 import re
 from datetime import date
-
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 from odoo import _
-
-
 class AbstractPerson(models.Model):
     _name = 'hr.hospital.abstract.person'
     _description = 'Abstract Person Model'
     _inherit = ['image.mixin']
-
     # Name fields
     last_name = fields.Char(
         string='Last Name',
@@ -29,47 +25,40 @@ class AbstractPerson(models.Model):
         string='Middle Name',
         translate=False
     )
-
     # Contact information
     phone = fields.Char(
         help="Format: +380XXXXXXXXX"
     )
     email = fields.Char()
-
     # Personal information
     gender = fields.Selection([
         ('male', 'Male'),
         ('female', 'Female'),
         ('other', 'Other')
     ], default='male')
-
     birth_date = fields.Date()
     age = fields.Integer(
         compute='_compute_age',
         store=True,
         readonly=True
     )
-
     # Computed fields
     full_name = fields.Char(
         compute='_compute_full_name',
         store=True,
         readonly=True
     )
-
     # Additional fields
     country_id = fields.Many2one(
         'res.country',
         string='Country of Citizenship',
         ondelete='restrict'
     )
-
     lang_id = fields.Many2one(
         'res.lang',
         string='Language',
         help='Language of communication'
     )
-
     # Age computation
     @api.depends('birth_date')
     def _compute_age(self):
@@ -82,7 +71,6 @@ class AbstractPerson(models.Model):
                 )
             else:
                 record.age = 0
-
     # Full name computation
     @api.depends('last_name', 'first_name', 'middle_name')
     def _compute_full_name(self):
@@ -91,7 +79,6 @@ class AbstractPerson(models.Model):
             if record.middle_name:
                 parts.append(record.middle_name)
             record.full_name = ' '.join(filter(None, parts))
-
     # Phone validation
     @api.constrains('phone')
     def _check_phone(self):
@@ -101,7 +88,6 @@ class AbstractPerson(models.Model):
                 raise ValidationError(
                     _('Invalid phone format. Please use the format: +380XXXXXXXXX')
                 )
-
     # Email validation
     @api.constrains('email')
     def _check_email(self):
@@ -109,7 +95,6 @@ class AbstractPerson(models.Model):
         for record in self:
             if record.email and not re.match(email_regex, record.email):
                 raise ValidationError(_('Invalid email format.'))
-
     # Birth date validation
     @api.constrains('birth_date')
     def _check_birth_date(self):

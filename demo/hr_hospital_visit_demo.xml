@@ -13,7 +13,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Regular checkup required</field>
         </record>
-        
+
         <record id="visit_planned_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_jane_smith"/>
             <field name="doctor_id" ref="doctor_emily_jones"/>
@@ -24,7 +24,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Follow up on asthma treatment</field>
         </record>
-        
+
         <record id="visit_planned_3" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_michael_brown"/>
             <field name="doctor_id" ref="doctor_michael_brown"/>
@@ -35,7 +35,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Diabetes management consultation</field>
         </record>
-        
+
         <!-- In Progress Visits -->
         <record id="visit_in_progress_1" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_sarah_wilson"/>
@@ -48,7 +48,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Emergency orthopedic evaluation</field>
         </record>
-        
+
         <record id="visit_in_progress_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_david_lee"/>
             <field name="doctor_id" ref="doctor_david_lee"/>
@@ -60,7 +60,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Surgical procedure in progress</field>
         </record>
-        
+
         <!-- Completed Visits -->
         <record id="visit_completed_1" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_emily_davis"/>
@@ -73,7 +73,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Cardiovascular evaluation completed. Patient should reduce stress and monitor blood pressure.</field>
         </record>
-        
+
         <record id="visit_completed_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_robert_taylor"/>
             <field name="doctor_id" ref="doctor_john_smith"/>
@@ -85,7 +85,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Arthritis management plan. Continue with prescribed medication.</field>
         </record>
-        
+
         <record id="visit_completed_3" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_lisa_chen"/>
             <field name="doctor_id" ref="doctor_lisa_chen"/>
@@ -97,7 +97,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Initial cardiology assessment. ECG recommended.</field>
         </record>
-        
+
         <record id="visit_completed_4" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_alex_kumar"/>
             <field name="doctor_id" ref="doctor_alex_kumar"/>
@@ -109,7 +109,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Neurological examination completed. Follow up with senior doctor.</field>
         </record>
-        
+
         <record id="visit_completed_5" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_maria_garcia"/>
             <field name="doctor_id" ref="doctor_emily_jones"/>
@@ -121,7 +121,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Asthma under control. Continue current treatment plan.</field>
         </record>
-        
+
         <!-- Cancelled Visits -->
         <record id="visit_cancelled_1" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_james_wilson"/>
@@ -133,7 +133,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Patient cancelled due to personal reasons.</field>
         </record>
-        
+
         <record id="visit_cancelled_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_sophie_martin"/>
             <field name="doctor_id" ref="doctor_sarah_wilson"/>
@@ -144,7 +144,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Surgery cancelled by patient. Reschedule requested.</field>
         </record>
-        
+
         <!-- No Show Visits -->
         <record id="visit_no_show_1" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_daniel_kim"/>
@@ -156,7 +156,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Patient did not attend scheduled appointment.</field>
         </record>
-        
+
         <record id="visit_no_show_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_olivia_brown"/>
             <field name="doctor_id" ref="doctor_robert_taylor"/>
@@ -167,7 +167,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Patient missed follow-up appointment. Contact to reschedule.</field>
         </record>
-        
+
         <!-- Additional Mixed Status Visits -->
         <record id="visit_mixed_1" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_lucas_anderson"/>
@@ -179,7 +179,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Emergency consultation for high cholesterol evaluation.</field>
         </record>
-        
+
         <record id="visit_mixed_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_john_doe"/>
             <field name="doctor_id" ref="doctor_emily_jones"/>
@@ -190,7 +190,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Neurological consultation requested.</field>
         </record>
-        
+
         <record id="visit_mixed_3" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_jane_smith"/>
             <field name="doctor_id" ref="doctor_sarah_wilson"/>
@@ -201,7 +201,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Orthopedic follow-up for migraines.</field>
         </record>
-        
+
         <record id="visit_mixed_4" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_michael_brown"/>
             <field name="doctor_id" ref="doctor_john_smith"/>
@@ -212,7 +212,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Cardiology consultation for diabetes patient.</field>
         </record>
-        
+
         <record id="visit_mixed_5" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_sarah_wilson"/>
             <field name="doctor_id" ref="doctor_michael_brown"/>
@@ -233,7 +233,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Initial consultation for new patient with hypertension.</field>
         </record>
-        
+
         <record id="visit_demo_new_2" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_robert_taylor"/>
             <field name="doctor_id" ref="doctor_emily_jones"/>
@@ -244,7 +244,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Preventive checkup for respiratory health.</field>
         </record>
-        
+
         <record id="visit_demo_new_3" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_lisa_chen"/>
             <field name="doctor_id" ref="doctor_michael_brown"/>
@@ -255,7 +255,7 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Follow-up for diabetes management and medication adjustment.</field>
         </record>
-        
+
         <record id="visit_demo_new_4" model="hr.hospital.visit">
             <field name="patient_id" ref="patient_alex_kumar"/>
             <field name="doctor_id" ref="doctor_sarah_wilson"/>
@@ -266,6 +266,6 @@
             <field name="currency_id" ref="base.USD"/>
             <field name="recommendations">Orthopedic consultation for joint pain evaluation.</field>
         </record>
-        
+
     </data>
 </odoo>

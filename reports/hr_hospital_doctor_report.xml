@@ -1,0 +1,15 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data>
+        <!-- Doctor Report Action -->
+        <record id="action_hr_hospital_doctor_report" model="ir.actions.report">
+            <field name="name">Doctor Report</field>
+            <field name="model">hr.hospital.doctor</field>
+            <field name="report_type">qweb-pdf</field>
+            <field name="report_name">hr_hospital.hr_hospital_doctor_report_template</field>
+            <field name="report_file_name">doctor_report</field>
+            <field name="binding_model_id" ref="model_hr_hospital_doctor"/>
+            <field name="binding_view_types">list,form</field>
+        </record>
+    </data>
+</odoo>

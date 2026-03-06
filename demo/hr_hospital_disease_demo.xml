@@ -11,7 +11,7 @@
             <field name="symptoms">Chest pain, shortness of breath, palpitations</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_respiratory" model="hr.hospital.disease">
             <field name="name">Respiratory Diseases</field>
             <field name="icd_10_code">J00-J99</field>
@@ -20,7 +20,7 @@
             <field name="symptoms">Cough, fever, difficulty breathing</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_musculoskeletal" model="hr.hospital.disease">
             <field name="name">Musculoskeletal Diseases</field>
             <field name="icd_10_code">M00-M99</field>
@@ -29,7 +29,7 @@
             <field name="symptoms">Joint pain, muscle weakness, limited movement</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_neurological" model="hr.hospital.disease">
             <field name="name">Neurological Disorders</field>
             <field name="icd_10_code">G00-G99</field>
@@ -38,7 +38,7 @@
             <field name="symptoms">Headaches, seizures, memory loss</field>
             <field name="active">True</field>
         </record>
-        
+
         <!-- Level 2 - Child Diseases -->
         <record id="disease_hypertension" model="hr.hospital.disease">
             <field name="name">Hypertension</field>
@@ -49,7 +49,7 @@
             <field name="symptoms">High blood pressure, headaches, dizziness</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_coronary_artery" model="hr.hospital.disease">
             <field name="name">Coronary Artery Disease</field>
             <field name="parent_id" ref="disease_cardiovascular"/>
@@ -59,7 +59,7 @@
             <field name="symptoms">Chest pain, shortness of breath, fatigue</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_influenza" model="hr.hospital.disease">
             <field name="name">Influenza</field>
             <field name="parent_id" ref="disease_respiratory"/>
@@ -69,7 +69,7 @@
             <field name="symptoms">Fever, cough, body aches, fatigue</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_pneumonia" model="hr.hospital.disease">
             <field name="name">Pneumonia</field>
             <field name="parent_id" ref="disease_respiratory"/>
@@ -79,7 +79,7 @@
             <field name="symptoms">Cough, fever, chest pain, difficulty breathing</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_osteoarthritis" model="hr.hospital.disease">
             <field name="name">Osteoarthritis</field>
             <field name="parent_id" ref="disease_musculoskeletal"/>
@@ -89,7 +89,7 @@
             <field name="symptoms">Joint pain, stiffness, reduced mobility</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_migraine" model="hr.hospital.disease">
             <field name="name">Migraine</field>
             <field name="parent_id" ref="disease_neurological"/>
@@ -99,7 +99,7 @@
             <field name="symptoms">Severe headache, nausea, light sensitivity</field>
             <field name="active">True</field>
         </record>
-        
+
         <!-- Level 3 - Specific Diseases -->
         <record id="disease_stage1_hypertension" model="hr.hospital.disease">
             <field name="name">Stage 1 Hypertension</field>
@@ -110,7 +110,7 @@
             <field name="symptoms">BP 130-139/80-89 mmHg, occasional headaches</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_stage2_hypertension" model="hr.hospital.disease">
             <field name="name">Stage 2 Hypertension</field>
             <field name="parent_id" ref="disease_hypertension"/>
@@ -120,7 +120,7 @@
             <field name="symptoms">BP 140+/90+ mmHg, frequent headaches, vision changes</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_influenza_a" model="hr.hospital.disease">
             <field name="name">Influenza Type A</field>
             <field name="parent_id" ref="disease_influenza"/>
@@ -130,7 +130,7 @@
             <field name="symptoms">High fever, severe body aches, respiratory symptoms</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_bacterial_pneumonia" model="hr.hospital.disease">
             <field name="name">Bacterial Pneumonia</field>
             <field name="parent_id" ref="disease_pneumonia"/>
@@ -140,7 +140,7 @@
             <field name="symptoms">High fever, productive cough, chest pain</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_knee_osteoarthritis" model="hr.hospital.disease">
             <field name="name">Knee Osteoarthritis</field>
             <field name="parent_id" ref="disease_osteoarthritis"/>
@@ -150,7 +150,7 @@
             <field name="symptoms">Knee pain, swelling, reduced range of motion</field>
             <field name="active">True</field>
         </record>
-        
+
         <record id="disease_migraine_with_aura" model="hr.hospital.disease">
             <field name="name">Migraine with Aura</field>
             <field name="parent_id" ref="disease_migraine"/>

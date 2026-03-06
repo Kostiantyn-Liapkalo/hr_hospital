@@ -20,7 +20,7 @@
             <field name="insurance_company_id" ref="base.res_partner_1"/>
             <field name="insurance_policy_number">INS-001-234567</field>
         </record>
-        
+
         <record id="patient_jane_smith" model="hr.hospital.patient">
             <field name="first_name">Jane</field>
             <field name="last_name">Smith</field>
@@ -38,7 +38,7 @@
             <field name="insurance_company_id" ref="base.res_partner_2"/>
             <field name="insurance_policy_number">INS-002-345678</field>
         </record>
-        
+
         <record id="patient_michael_brown" model="hr.hospital.patient">
             <field name="first_name">Michael</field>
             <field name="last_name">Brown</field>
@@ -56,7 +56,7 @@
             <field name="insurance_company_id" ref="base.res_partner_3"/>
             <field name="insurance_policy_number">INS-003-456789</field>
         </record>
-        
+
         <record id="patient_sarah_wilson" model="hr.hospital.patient">
             <field name="first_name">Sarah</field>
             <field name="last_name">Wilson</field>
@@ -74,7 +74,7 @@
             <field name="insurance_company_id" ref="base.res_partner_4"/>
             <field name="insurance_policy_number">INS-004-567890</field>
         </record>
-        
+
         <record id="patient_david_lee" model="hr.hospital.patient">
             <field name="first_name">David</field>
             <field name="last_name">Lee</field>
@@ -92,7 +92,7 @@
             <field name="insurance_company_id" ref="base.res_partner_5"/>
             <field name="insurance_policy_number">INS-005-678901</field>
         </record>
-        
+
         <record id="patient_emily_davis" model="hr.hospital.patient">
             <field name="first_name">Emily</field>
             <field name="last_name">Davis</field>
@@ -110,7 +110,7 @@
             <field name="insurance_company_id" ref="base.res_partner_6"/>
             <field name="insurance_policy_number">INS-006-789012</field>
         </record>
-        
+
         <record id="patient_robert_taylor" model="hr.hospital.patient">
             <field name="first_name">Robert</field>
             <field name="last_name">Taylor</field>
@@ -128,7 +128,7 @@
             <field name="insurance_company_id" ref="base.res_partner_7"/>
             <field name="insurance_policy_number">INS-007-890123</field>
         </record>
-        
+
         <record id="patient_lisa_chen" model="hr.hospital.patient">
             <field name="first_name">Lisa</field>
             <field name="last_name">Chen</field>
@@ -146,7 +146,7 @@
             <field name="insurance_company_id" ref="base.res_partner_8"/>
             <field name="insurance_policy_number">INS-008-901234</field>
         </record>
-        
+
         <record id="patient_alex_kumar" model="hr.hospital.patient">
             <field name="first_name">Alex</field>
             <field name="last_name">Kumar</field>
@@ -164,7 +164,7 @@
             <field name="insurance_company_id" ref="base.res_partner_9"/>
             <field name="insurance_policy_number">INS-009-012345</field>
         </record>
-        
+
         <record id="patient_maria_garcia" model="hr.hospital.patient">
             <field name="first_name">Maria</field>
             <field name="last_name">Garcia</field>
@@ -182,7 +182,7 @@
             <field name="insurance_company_id" ref="base.res_partner_10"/>
             <field name="insurance_policy_number">INS-010-123456</field>
         </record>
-        
+
         <record id="patient_james_wilson" model="hr.hospital.patient">
             <field name="first_name">James</field>
             <field name="last_name">Wilson</field>
@@ -200,7 +200,7 @@
             <field name="insurance_company_id" ref="base.res_partner_11"/>
             <field name="insurance_policy_number">INS-011-234567</field>
         </record>
-        
+
         <record id="patient_sophie_martin" model="hr.hospital.patient">
             <field name="first_name">Sophie</field>
             <field name="last_name">Martin</field>
@@ -218,7 +218,7 @@
             <field name="insurance_company_id" ref="base.res_partner_12"/>
             <field name="insurance_policy_number">INS-012-345678</field>
         </record>
-        
+
         <record id="patient_daniel_kim" model="hr.hospital.patient">
             <field name="first_name">Daniel</field>
             <field name="last_name">Kim</field>
@@ -236,7 +236,7 @@
             <field name="insurance_company_id" ref="base.res_partner_13"/>
             <field name="insurance_policy_number">INS-013-456789</field>
         </record>
-        
+
         <record id="patient_olivia_brown" model="hr.hospital.patient">
             <field name="first_name">Olivia</field>
             <field name="last_name">Brown</field>
@@ -254,7 +254,7 @@
             <field name="insurance_company_id" ref="base.res_partner_14"/>
             <field name="insurance_policy_number">INS-014-567890</field>
         </record>
-        
+
         <record id="patient_lucas_anderson" model="hr.hospital.patient">
             <field name="first_name">Lucas</field>
             <field name="last_name">Anderson</field>
@@ -272,7 +272,7 @@
             <field name="insurance_company_id" ref="base.res_partner_15"/>
             <field name="insurance_policy_number">INS-015-678901</field>
         </record>
-        
+
         <!-- Contact Persons -->
         <record id="contact_mary_doe" model="hr.hospital.contact.person">
             <field name="first_name">Mary</field>
@@ -285,7 +285,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_robert_smith" model="hr.hospital.contact.person">
             <field name="first_name">Robert</field>
             <field name="last_name">Smith</field>
@@ -297,7 +297,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_susan_brown" model="hr.hospital.contact.person">
             <field name="first_name">Susan</field>
             <field name="last_name">Brown</field>
@@ -309,7 +309,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_james_wilson" model="hr.hospital.contact.person">
             <field name="first_name">James</field>
             <field name="last_name">Wilson</field>
@@ -321,7 +321,7 @@
             <field name="emergency_contact" eval="False"/>
             <field name="can_make_decisions" eval="False"/>
         </record>
-        
+
         <record id="contact_patricia_lee" model="hr.hospital.contact.person">
             <field name="first_name">Patricia</field>
             <field name="last_name">Lee</field>
@@ -333,7 +333,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_michael_davis" model="hr.hospital.contact.person">
             <field name="first_name">Michael</field>
             <field name="last_name">Davis</field>
@@ -345,7 +345,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_linda_taylor" model="hr.hospital.contact.person">
             <field name="first_name">Linda</field>
             <field name="last_name">Taylor</field>
@@ -357,7 +357,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_david_chen" model="hr.hospital.contact.person">
             <field name="first_name">David</field>
             <field name="last_name">Chen</field>
@@ -369,7 +369,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_rachel_garcia" model="hr.hospital.contact.person">
             <field name="first_name">Rachel</field>
             <field name="last_name">Garcia</field>
@@ -381,7 +381,7 @@
             <field name="emergency_contact" eval="False"/>
             <field name="can_make_decisions" eval="False"/>
         </record>
-        
+
         <record id="contact_thomas_martin" model="hr.hospital.contact.person">
             <field name="first_name">Thomas</field>
             <field name="last_name">Martin</field>
@@ -393,7 +393,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_jennifer_kim" model="hr.hospital.contact.person">
             <field name="first_name">Jennifer</field>
             <field name="last_name">Kim</field>
@@ -405,7 +405,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_william_brown" model="hr.hospital.contact.person">
             <field name="first_name">William</field>
             <field name="last_name">Brown</field>
@@ -417,7 +417,7 @@
             <field name="emergency_contact" eval="True"/>
             <field name="can_make_decisions" eval="True"/>
         </record>
-        
+
         <record id="contact_sophie_anderson" model="hr.hospital.contact.person">
             <field name="first_name">Sophie</field>
             <field name="last_name">Anderson</field>

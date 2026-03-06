@@ -66,14 +66,14 @@
                             <field name="user_id"/>
                         </group>
                     </group>
-                    
+
                     <!-- Mentor Information (visible for interns) -->
                     <group invisible="is_intern == False">
                         <group string="Mentor Information">
                             <field name="mentor_id"/>
                         </group>
                     </group>
-                    
+
                     <!-- Interns Information (visible for mentors) -->
                     <group invisible="not intern_ids">
                         <group string="Interns (Mentor Role)" colspan="2">
@@ -99,7 +99,7 @@
                             </field>
                         </group>
                     </group>
-                    
+
                     <notebook>
                         <page string="Schedule">
                             <field name="schedule_ids">
@@ -158,6 +158,8 @@
         <field name="model">hr.hospital.doctor</field>
         <field name="arch" type="xml">
             <kanban default_group_by="speciality_id" records_draggable="0">
+                <field name="first_name"/>
+                <field name="last_name"/>
                 <field name="full_name"/>
                 <field name="speciality_id"/>
                 <field name="license_number"/>
@@ -168,18 +170,26 @@
                 <field name="experience"/>
                 <field name="active_patients_count"/>
                 <field name="upcoming_visits_count"/>
+                <field name="intern_ids"/>
                 <templates>
                     <t t-name="card">
                         <div class="oe_kanban_global_click">
                             <div class="o_kanban_record_top">
                                 <div class="o_kanban_record_headings">
-                                    <strong class="o_kanban_record_title"><field name="full_name"/></strong>
+                                    <strong class="o_kanban_record_title">
+                                        <t t-esc="record.last_name.raw_value"/> <t t-esc="record.first_name.raw_value"/>
+                                    </strong>
                                     <div class="o_kanban_record_subtitle">
                                         <field name="speciality_id"/>
                                         <t t-if="record.is_intern.raw_value">
                                             <span class="badge bg-warning">Intern</span>
                                         </t>
                                     </div>
+                                </div>
+                                <div class="o_kanban_manage_button_section">
+                                    <a class="o_kanban_manage_toggle_button" href="#" tabindex="-1">
+                                        <i class="fa fa-ellipsis-v" role="img" aria-label="Manage" title="Manage"/>
+                                    </a>
                                 </div>
                             </div>
                             <div class="o_kanban_record_body">
@@ -188,6 +198,20 @@
                                 <div><i class="fa fa-envelope"/> <field name="email"/></div>
                                 <div><i class="fa fa-star"/> Rating: <field name="rating"/>/5</div>
                                 <div><i class="fa fa-clock-o"/> Experience: <field name="experience"/> years</div>
+
+                                <!-- Interns List for Mentors -->
+                                <div t-if="record.intern_ids.raw_value and record.intern_ids.raw_value.length > 0" style="margin-top: 10px; border-top: 1px solid #eee; padding-top: 8px;">
+                                    <div style="font-weight: bold; color: #009688; margin-bottom: 5px;">
+                                        <i class="fa fa-users"/> Interns (<t t-esc="record.intern_ids.raw_value.length"/>):
+                                    </div>
+                                    <div style="font-size: 11px; color: #666;">
+                                        <t t-foreach="record.intern_ids.raw_value" t-as="intern">
+                                            <div style="margin: 2px 0;">
+                                                • <t t-esc="intern.data.display_name"/>
+                                            </div>
+                                        </t>
+                                    </div>
+                                </div>
                             </div>
                             <div class="o_kanban_record_bottom">
                                 <div class="oe_kanban_bottom_left">
@@ -198,6 +222,12 @@
                                     <button name="action_create_quick_visit_from_doctor" string="Quick Visit" type="object" class="btn btn-sm btn-success">
                                         <i class="fa fa-calendar-plus-o"/>
                                     </button>
+                                </div>
+                            </div>
+                            <div class="o_kanban_manage_view_section o_kanban_manage_view_form">
+                                <div class="o_kanban_manage_view_section">
+                                    <a type="edit" class="btn btn-primary btn-sm">Edit</a>
+                                    <a type="delete" class="btn btn-danger btn-sm">Delete</a>
                                 </div>
                             </div>
                         </div>

@@ -2,7 +2,7 @@
 <odoo>
     <data noupdate="1">
         <!-- Doctor Schedule Demo Data -->
-        
+
         <!-- Doctor 1 Schedule - Cardiologist -->
         <record id="schedule_doctor_1_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
@@ -12,7 +12,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_1_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
             <field name="day_of_week">1</field>
@@ -21,7 +21,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_1_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
             <field name="day_of_week">2</field>
@@ -30,7 +30,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_1_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
             <field name="day_of_week">3</field>
@@ -39,7 +39,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_1_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
             <field name="day_of_week">4</field>
@@ -48,7 +48,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Early Friday</field>
         </record>
-        
+
         <!-- Doctor 2 Schedule - Neurologist -->
         <record id="schedule_doctor_2_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>
@@ -58,7 +58,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_2_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>
             <field name="day_of_week">1</field>
@@ -67,7 +67,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_2_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>
             <field name="day_of_week">2</field>
@@ -76,7 +76,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_2_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>
             <field name="day_of_week">3</field>
@@ -85,7 +85,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <record id="schedule_doctor_2_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>
             <field name="day_of_week">4</field>
@@ -94,7 +94,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Regular work hours</field>
         </record>
-        
+
         <!-- Doctor 3 Schedule - Orthopedic Surgeon -->
         <record id="schedule_doctor_3_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_3"/>
@@ -104,7 +104,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery day</field>
         </record>
-        
+
         <record id="schedule_doctor_3_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_3"/>
             <field name="day_of_week">1</field>
@@ -113,7 +113,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery day</field>
         </record>
-        
+
         <record id="schedule_doctor_3_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_3"/>
             <field name="day_of_week">2</field>
@@ -122,7 +122,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery day</field>
         </record>
-        
+
         <record id="schedule_doctor_3_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_3"/>
             <field name="day_of_week">3</field>
@@ -131,7 +131,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery day</field>
         </record>
-        
+
         <record id="schedule_doctor_3_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_3"/>
             <field name="day_of_week">4</field>
@@ -140,7 +140,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Admin day</field>
         </record>
-        
+
         <!-- Doctor 4 Schedule - Allergist -->
         <record id="schedule_doctor_4_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_4"/>
@@ -150,7 +150,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Clinic hours</field>
         </record>
-        
+
         <record id="schedule_doctor_4_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_4"/>
             <field name="day_of_week">1</field>
@@ -159,7 +159,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Clinic hours</field>
         </record>
-        
+
         <record id="schedule_doctor_4_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_4"/>
             <field name="day_of_week">2</field>
@@ -168,7 +168,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Clinic hours</field>
         </record>
-        
+
         <record id="schedule_doctor_4_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_4"/>
             <field name="day_of_week">3</field>
@@ -177,7 +177,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Clinic hours</field>
         </record>
-        
+
         <record id="schedule_doctor_4_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_4"/>
             <field name="day_of_week">4</field>
@@ -186,7 +186,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Short Friday</field>
         </record>
-        
+
         <!-- Doctor 5 Schedule - Pediatrician -->
         <record id="schedule_doctor_5_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_5"/>
@@ -196,7 +196,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Pediatric clinic</field>
         </record>
-        
+
         <record id="schedule_doctor_5_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_5"/>
             <field name="day_of_week">1</field>
@@ -205,7 +205,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Pediatric clinic</field>
         </record>
-        
+
         <record id="schedule_doctor_5_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_5"/>
             <field name="day_of_week">2</field>
@@ -214,7 +214,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Pediatric clinic</field>
         </record>
-        
+
         <record id="schedule_doctor_5_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_5"/>
             <field name="day_of_week">3</field>
@@ -223,7 +223,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Pediatric clinic</field>
         </record>
-        
+
         <record id="schedule_doctor_5_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_5"/>
             <field name="day_of_week">4</field>
@@ -232,7 +232,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Admin Friday</field>
         </record>
-        
+
         <!-- Doctor 6 Schedule - General Surgeon -->
         <record id="schedule_doctor_6_monday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_6"/>
@@ -242,7 +242,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery schedule</field>
         </record>
-        
+
         <record id="schedule_doctor_6_tuesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_6"/>
             <field name="day_of_week">1</field>
@@ -251,7 +251,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery schedule</field>
         </record>
-        
+
         <record id="schedule_doctor_6_wednesday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_6"/>
             <field name="day_of_week">2</field>
@@ -260,7 +260,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery schedule</field>
         </record>
-        
+
         <record id="schedule_doctor_6_thursday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_6"/>
             <field name="day_of_week">3</field>
@@ -269,7 +269,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Surgery schedule</field>
         </record>
-        
+
         <record id="schedule_doctor_6_friday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_6"/>
             <field name="day_of_week">4</field>
@@ -278,7 +278,7 @@
             <field name="schedule_type">work</field>
             <field name="notes">Admin Friday</field>
         </record>
-        
+
         <!-- Weekend Off for All Doctors -->
         <record id="schedule_doctor_1_saturday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
@@ -288,7 +288,7 @@
             <field name="schedule_type">vacation</field>
             <field name="notes">Weekend off</field>
         </record>
-        
+
         <record id="schedule_doctor_1_sunday" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_1"/>
             <field name="day_of_week">6</field>
@@ -297,7 +297,7 @@
             <field name="schedule_type">vacation</field>
             <field name="notes">Weekend off</field>
         </record>
-        
+
         <!-- Specific Date Schedule for Conference -->
         <record id="schedule_doctor_2_conference" model="hr.hospital.doctor.schedule">
             <field name="doctor_id" ref="demo_doctor_2"/>

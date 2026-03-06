@@ -9,11 +9,9 @@
     'depends': ['base', 'contacts', 'mail'],
     'data': [
         'security/ir.model.access.csv',
-
         'data/hr_hospital_sequence_data.xml',
         'data/hr_hospital_doctor_speciality_data.xml',
         'data/hr_hospital_disease_data.xml',
-
         'views/hr_hospital_contact_person_views.xml',
         'views/hr_hospital_disease_views.xml',
         'views/hr_hospital_doctor_views.xml',
@@ -23,15 +21,14 @@
         'views/hr_hospital_patient_doctor_history_views.xml',
         'views/hr_hospital_visit_views.xml',
         'views/hr_hospital_diagnosis_views.xml',
-
+        'reports/hr_hospital_doctor_report.xml',
+        'reports/hr_hospital_doctor_report_templates.xml',
         'wizards/hr_hospital_mass_reassign_doctor_wizard_views.xml',
         'wizards/hr_hospital_disease_report_wizard_views.xml',
         'wizards/hr_hospital_reschedule_visit_wizard_views.xml',
         'wizards/hr_hospital_doctor_schedule_wizard_views.xml',
         'wizards/hr_hospital_patient_card_export_wizard_views.xml',
-
         'views/menu.xml',
-
     ],
     'demo': [
         'demo/hr_hospital_doctor_speciality_demo.xml',

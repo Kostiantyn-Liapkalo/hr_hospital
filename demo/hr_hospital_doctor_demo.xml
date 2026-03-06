@@ -18,7 +18,7 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1980, 5, 15)"/>
         </record>
-        
+
         <record id="doctor_emily_jones" model="hr.hospital.doctor">
             <field name="first_name">Emily</field>
             <field name="last_name">Jones</field>
@@ -34,7 +34,7 @@
             <field name="gender">female</field>
             <field name="birth_date" eval="datetime(1982, 8, 22)"/>
         </record>
-        
+
         <record id="doctor_michael_brown" model="hr.hospital.doctor">
             <field name="first_name">Michael</field>
             <field name="last_name">Brown</field>
@@ -50,7 +50,7 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1978, 11, 30)"/>
         </record>
-        
+
         <record id="doctor_sarah_wilson" model="hr.hospital.doctor">
             <field name="first_name">Sarah</field>
             <field name="last_name">Wilson</field>
@@ -66,7 +66,7 @@
             <field name="gender">female</field>
             <field name="birth_date" eval="datetime(1985, 3, 18)"/>
         </record>
-        
+
         <record id="doctor_david_lee" model="hr.hospital.doctor">
             <field name="first_name">David</field>
             <field name="last_name">Lee</field>
@@ -82,7 +82,7 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1975, 6, 8)"/>
         </record>
-        
+
         <record id="doctor_robert_taylor" model="hr.hospital.doctor">
             <field name="first_name">Robert</field>
             <field name="last_name">Taylor</field>
@@ -98,7 +98,7 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1973, 2, 14)"/>
         </record>
-        
+
         <!-- Intern Doctors -->
         <record id="doctor_lisa_chen" model="hr.hospital.doctor">
             <field name="first_name">Lisa</field>
@@ -116,7 +116,7 @@
             <field name="gender">female</field>
             <field name="birth_date" eval="datetime(1992, 4, 12)"/>
         </record>
-        
+
         <record id="doctor_alex_kumar" model="hr.hospital.doctor">
             <field name="first_name">Alex</field>
             <field name="last_name">Kumar</field>
@@ -133,7 +133,7 @@
             <field name="gender">male</field>
             <field name="birth_date" eval="datetime(1994, 9, 28)"/>
         </record>
-        
+
         <!-- Additional Intern Doctors -->
         <record id="doctor_sophie_martin" model="hr.hospital.doctor">
             <field name="first_name">Sophie</field>
@@ -151,7 +151,7 @@
             <field name="gender">female</field>
             <field name="birth_date" eval="datetime(1995, 3, 15)"/>
         </record>
-        
+
         <record id="doctor_daniel_kim" model="hr.hospital.doctor">
             <field name="first_name">Daniel</field>
             <field name="last_name">Kim</field>

@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Contact Person Views -->
-    
+
     <!-- List View -->
     <record id="view_hr_hospital_contact_person_tree" model="ir.ui.view">
         <field name="name">hr.hospital.contact.person.tree</field>
@@ -114,7 +114,7 @@
         </field>
     </record>
 
-    
+
     <!-- Action -->
     <record id="action_hr_hospital_contact_person" model="ir.actions.act_window">
         <field name="name">Contact Persons</field>

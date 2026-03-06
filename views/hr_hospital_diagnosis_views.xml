@@ -1,7 +1,7 @@
 <?xml version="1.0" encoding="utf-8"?>
 <odoo>
     <!-- Diagnosis Views -->
-    
+
     <!-- List View -->
     <record id="view_hr_hospital_diagnosis_tree" model="ir.ui.view">
         <field name="name">hr.hospital.diagnosis.tree</field>
@@ -115,7 +115,7 @@
         </field>
     </record>
 
-    
+
     <!-- Action -->
     <record id="action_hr_hospital_diagnosis" model="ir.actions.act_window">
         <field name="name">Medical Diagnoses</field>
