@@ -4,6 +4,25 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
 from odoo import _
 class HrHospitalVisit(models.Model):
+    """
+    Patient Visit model for hospital management.
+    
+    This model represents medical visits/appointments between patients and doctors.
+    It tracks visit status, timing, diagnoses, and related information.
+    
+    Attributes:
+        state (Selection): Visit status (planned, in_progress, completed, cancelled, no_show)
+        planned_datetime (Datetime): Scheduled date and time
+        actual_datetime (Datetime): Actual visit date and time
+        doctor_id (Many2one): Assigned doctor
+        patient_id (Many2one): Patient
+        visit_type (Selection): Type of visit (first, follow_up, preventive, etc.)
+        diagnosis_ids (One2many): Diagnoses made during visit
+        recommendations (Html): Doctor's recommendations
+        cost (Monetary): Visit cost
+        duration (Float): Visit duration in hours
+        currency_id (Many2one): Currency for billing
+    """
     _name = 'hr.hospital.visit'
     _description = 'Patient Visit'
     _order = 'planned_datetime desc'
@@ -149,6 +168,16 @@ class HrHospitalVisit(models.Model):
                         )
     # Actions
     def action_start_visit(self):
+        """
+        Start the visit by changing state to 'in_progress'.
+        
+        Only works if current state is 'planned'.
+        Sets actual_datetime to current time.
+        Posts message to chatter.
+        
+        Returns:
+            bool: True if successful.
+        """
         for visit in self:
             if visit.state == 'planned':
                 visit.write({
@@ -158,6 +187,15 @@ class HrHospitalVisit(models.Model):
                 visit.message_post(body=_('Visit started'), subtype_xmlid='mail.mt_note')
         return True
     def action_complete_visit(self):
+        """
+        Complete the visit by changing state to 'completed'.
+        
+        Only works if current state is 'in_progress'.
+        Posts message to chatter.
+        
+        Returns:
+            bool: True if successful.
+        """
         for visit in self:
             if visit.state == 'in_progress':
                 visit.write({
@@ -166,6 +204,15 @@ class HrHospitalVisit(models.Model):
                 visit.message_post(body=_('Visit completed'), subtype_xmlid='mail.mt_note')
         return True
     def action_cancel_visit(self):
+        """
+        Cancel the visit by changing state to 'cancelled'.
+        
+        Works if current state is 'planned' or 'in_progress'.
+        Posts message to chatter.
+        
+        Returns:
+            bool: True if successful.
+        """
         for visit in self:
             if visit.state in ['planned', 'in_progress']:
                 visit.write({
@@ -174,6 +221,15 @@ class HrHospitalVisit(models.Model):
                 visit.message_post(body=_('Visit cancelled'), subtype_xmlid='mail.mt_note')
         return True
     def action_mark_no_show(self):
+        """
+        Mark the visit as 'no_show' when patient doesn't arrive.
+        
+        Only works if current state is 'planned'.
+        Posts message to chatter.
+        
+        Returns:
+            bool: True if successful.
+        """
         for visit in self:
             if visit.state == 'planned':
                 visit.write({
@@ -184,6 +240,12 @@ class HrHospitalVisit(models.Model):
     # Computation methods
     @api.depends('planned_datetime', 'actual_datetime')
     def _compute_duration(self):
+        """
+        Compute visit duration in hours.
+        
+        Calculates the difference between actual and planned datetime.
+        Returns absolute value in hours.
+        """
         for visit in self:
             if visit.actual_datetime and visit.planned_datetime:
                 duration = visit.actual_datetime - visit.planned_datetime
@@ -192,10 +254,18 @@ class HrHospitalVisit(models.Model):
                 visit.duration = 0.0
     @api.depends('diagnosis_ids')
     def _compute_diagnosis_count(self):
+        """
+        Compute the number of diagnoses for this visit.
+        """
         for visit in self:
             visit.diagnosis_count = len(visit.diagnosis_ids)
     @api.depends('doctor_id')
     def _compute_doctor_diagnosis_history(self):
+        """
+        Compute the last 50 diagnoses made by this visit's doctor.
+        
+        Used to show doctor's diagnosis history during the visit.
+        """
         for visit in self:
             if visit.doctor_id:
                 visit.doctor_diagnosis_history_ids = self.env['hr.hospital.diagnosis'].search([
@@ -206,6 +276,12 @@ class HrHospitalVisit(models.Model):
     # Display name computation
     @api.depends('patient_id', 'doctor_id', 'planned_datetime')
     def _compute_display_name(self):
+        """
+        Compute display name for visit.
+        
+        Format: "Patient Name - Doctor Name (YYYY-MM-DD HH:MM)"
+        or "Visit #ID" if missing required fields.
+        """
         for visit in self:
             if visit.patient_id and visit.doctor_id and visit.planned_datetime:
                 visit.display_name = f"{visit.patient_id.full_name} - {visit.doctor_id.full_name} ({visit.planned_datetime.strftime('%Y-%m-%d %H:%M')})"
@@ -213,6 +289,18 @@ class HrHospitalVisit(models.Model):
                 visit.display_name = f"Visit #{visit.id}"
     # Override write to lock records
     def write(self, vals):
+        """
+        Override write to prevent modifying completed/cancelled/no_show visits.
+        
+        Core fields (doctor_id, patient_id, planned_datetime, visit_type)
+        cannot be changed once visit is completed, cancelled, or marked as no-show.
+        
+        Raises:
+            UserError: If trying to modify restricted fields on locked visit.
+            
+        Returns:
+            bool: Result of parent write method.
+        """
         for visit in self:
             if visit.state in ['completed', 'cancelled', 'no_show']:
                 restricted_fields = ['doctor_id', 'patient_id', 'planned_datetime', 'visit_type']
@@ -223,6 +311,15 @@ class HrHospitalVisit(models.Model):
         return super(HrHospitalVisit, self).write(vals)
     # Override unlink
     def unlink(self):
+        """
+        Override unlink to prevent deleting visits with linked diagnoses.
+        
+        Raises:
+            UserError: If visit has linked diagnoses that must be deleted first.
+            
+        Returns:
+            Result of parent unlink method.
+        """
         for visit in self:
             if visit.diagnosis_ids:
                 raise UserError(
@@ -233,6 +330,17 @@ class HrHospitalVisit(models.Model):
     # Override default_get to set default values
     @api.model
     def default_get(self, fields_list):
+        """
+        Set default values for new visit.
+        
+        Defaults planned_datetime to tomorrow at 9:00 AM if not specified.
+        
+        Args:
+            fields_list (list): List of fields to get defaults for.
+            
+        Returns:
+            dict: Default values dictionary.
+        """
         res = super(HrHospitalVisit, self).default_get(fields_list)
         if 'planned_datetime' in fields_list and not res.get('planned_datetime'):
             # Set default to tomorrow at 9:00 AM
@@ -241,7 +349,20 @@ class HrHospitalVisit(models.Model):
         return res
     @api.model
     def get_available_visit_dates(self, doctor_id, start_date=None, end_date=None):
-        """Get available visit dates excluding weekends and doctor's holidays"""
+        """
+        Get available visit dates for a doctor excluding weekends and holidays.
+        
+        Checks doctor's schedule and holiday calendar to find available dates
+        within the specified date range.
+        
+        Args:
+            doctor_id (int): ID of the doctor
+            start_date (date): Start of search period (default: today)
+            end_date (date): End of search period (default: +30 days)
+            
+        Returns:
+            list: List of dicts with date, start_time, end_time for each available date.
+        """
         if not start_date:
             start_date = datetime.now().date()
         if not end_date:

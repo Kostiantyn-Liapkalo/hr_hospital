@@ -3,6 +3,27 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
 from datetime import date
 class HrHospitalPatient(models.Model):
+    """
+    Patient model for hospital management.
+    
+    This model represents patients in the hospital system, storing their
+    medical information, personal doctor assignment, visit history, and
+    insurance details.
+    
+    Attributes:
+        personal_doctor_id (Many2one): Assigned personal doctor
+        passport (Char): Passport number (10 digits)
+        contact_person_id (Many2one): Emergency contact person
+        blood_group (Selection): Blood type (A+, A-, B+, B-, AB+, AB-, O+, O-)
+        allergies (Text): Known allergies
+        chronic_diseases (Text): Chronic conditions
+        insurance_company_id (Many2one): Insurance provider
+        insurance_policy_number (Char): Policy number
+        visit_ids (One2many): Patient's visit history
+        diagnosis_ids (One2many): Patient's diagnoses
+        last_visit_date (Datetime): Date of last completed visit
+        total_visits (Integer): Total number of visits
+    """
     _name = 'hr.hospital.patient'
     _description = 'Patient'
     _inherit = ['hr.hospital.abstract.person']
@@ -101,6 +122,12 @@ class HrHospitalPatient(models.Model):
     # Last visit computation
     @api.depends('visit_ids', 'visit_ids.planned_datetime', 'visit_ids.state')
     def _compute_last_visit(self):
+        """
+        Compute the date of the last completed visit.
+        
+        Returns:
+            Datetime: Date of the most recent completed visit or False.
+        """
         for patient in self:
             visits = patient.visit_ids.filtered(
                 lambda v: v.state == 'completed'
@@ -109,11 +136,19 @@ class HrHospitalPatient(models.Model):
     # Total visits computation
     @api.depends('visit_ids')
     def _compute_total_visits(self):
+        """
+        Compute the total number of visits for this patient.
+        """
         for patient in self:
             patient.total_visits = len(patient.visit_ids)
     # Display name computation for Odoo 19.0
     @api.depends('full_name', 'passport')
     def _compute_display_name(self):
+        """
+        Compute display name including full name and passport number.
+        
+        Format: "Full Name (Passport)" or just "Full Name" if no passport.
+        """
         for patient in self:
             if patient.passport:
                 patient.display_name = f"{patient.full_name} ({patient.passport})"
@@ -122,6 +157,14 @@ class HrHospitalPatient(models.Model):
     # Passport validation
     @api.constrains('passport')
     def _check_passport(self):
+        """
+        Validate passport number format.
+        
+        Must contain exactly 10 digits.
+        
+        Raises:
+            ValidationError: If passport format is invalid.
+        """
         for record in self:
             if record.passport:
                 # Remove any non-digit characters
@@ -133,6 +176,14 @@ class HrHospitalPatient(models.Model):
     # Age validation
     @api.constrains('birth_date')
     def _check_age(self):
+        """
+        Validate patient age is reasonable.
+        
+        Age must be greater than 0 and not more than 120 years.
+        
+        Raises:
+            ValidationError: If age is outside valid range.
+        """
         for record in self:
             if record.birth_date:
                 today = date.today()
@@ -147,6 +198,12 @@ class HrHospitalPatient(models.Model):
     # Country onchange
     @api.onchange('country_id')
     def _onchange_country_id(self):
+        """
+        Suggest language based on country of citizenship.
+        
+        When country is selected, automatically suggest appropriate
+        communication language for the patient.
+        """
         if self.country_id:
             # Find language by country code
             lang = self.env['res.lang'].search([
@@ -163,6 +220,11 @@ class HrHospitalPatient(models.Model):
     # Allergies warning onchange
     @api.onchange('allergies')
     def _onchange_allergies(self):
+        """
+        Display warning when allergies are entered.
+        
+        Alerts medical staff to be cautious when prescribing medication.
+        """
         if self.allergies:
             return {
                 'warning': {
@@ -173,6 +235,12 @@ class HrHospitalPatient(models.Model):
     # Personal doctor onchange - show warning about allergies
     @api.onchange('personal_doctor_id')
     def _onchange_personal_doctor(self):
+        """
+        Warn new doctor about patient allergies.
+        
+        When assigning a new personal doctor, display allergy information
+        to ensure the doctor is aware of patient's conditions.
+        """
         if self.personal_doctor_id and self.allergies:
             return {
                 'warning': {
@@ -182,6 +250,18 @@ class HrHospitalPatient(models.Model):
             }
     # Override write to create history
     def write(self, vals):
+        """
+        Override write to track personal doctor changes.
+        
+        When personal_doctor_id is changed, creates a history record
+        and deactivates the previous active history entry.
+        
+        Args:
+            vals (dict): Values to write
+            
+        Returns:
+            bool: Result of parent write method.
+        """
         if 'personal_doctor_id' in vals:
             # Create a history record for each patient in self
             for patient in self:
@@ -212,6 +292,15 @@ class HrHospitalPatient(models.Model):
         return super(HrHospitalPatient, self).write(vals)
     # Override unlink to prevent deletion with active visits
     def unlink(self):
+        """
+        Override unlink to prevent deleting patients with active visits.
+        
+        Raises:
+            UserError: If patient has planned or in-progress visits.
+            
+        Returns:
+            Result of parent unlink method.
+        """
         for patient in self:
             active_visits = patient.visit_ids.filtered(
                 lambda v: v.state in ['planned', 'in_progress']
@@ -224,7 +313,16 @@ class HrHospitalPatient(models.Model):
         return super(HrHospitalPatient, self).unlink()
     @api.model
     def get_patients_by_language_and_country(self, lang_code=None, country_code=None):
-        """Get patients by language and country of citizenship"""
+        """
+        Get patients filtered by language and/or country.
+        
+        Args:
+            lang_code (str): Language code to filter by (e.g., 'uk_UA')
+            country_code (str): ISO country code to filter by (e.g., 'UA')
+            
+        Returns:
+            Recordset: Patients matching the filter criteria.
+        """
         domain = [('active', '=', True)]
         if lang_code:
             domain.append(('lang_id.code', '=', lang_code))
@@ -233,7 +331,22 @@ class HrHospitalPatient(models.Model):
         return self.search(domain)
     @api.model
     def name_search(self, name='', args=None, operator='ilike', limit=100):
-        """Dynamic domain for patients based on language and country"""
+        """
+        Search for patients with dynamic domain.
+        
+        Supports context parameters:
+            - lang_code: Filter by language
+            - country_code: Filter by country
+        
+        Args:
+            name (str): Search name pattern
+            args (list): Additional search domain
+            operator (str): Search operator (default: 'ilike')
+            limit (int): Maximum number of results
+            
+        Returns:
+            list: List of tuples (id, name) for matching patients.
+        """
         if args is None:
             args = []
         domain = args + [('active', '=', True)]
@@ -248,7 +361,21 @@ class HrHospitalPatient(models.Model):
         patients = self.search(domain, limit=limit)
         return patients.name_get()
     def action_create_quick_visit(self):
-        """Create a quick visit to personal doctor from patient card"""
+        """
+        Create a quick visit to patient's personal doctor.
+        
+        Automatically assigns:
+            - Patient's personal doctor as the doctor
+            - Visit type: 'first' if no visits, else 'follow_up'
+            - Tomorrow at 9 AM as planned datetime
+            - State: 'planned'
+        
+        Raises:
+            UserError: If patient has no personal doctor assigned.
+            
+        Returns:
+            dict: Action to open the created visit form.
+        """
         self.ensure_one()
         if not self.personal_doctor_id:
             raise UserError(_('Please assign a personal doctor first.'))

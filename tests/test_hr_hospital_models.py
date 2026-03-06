@@ -164,3 +164,86 @@ class TestHrHospitalModels(TransactionCase):
         diagnosis.action_approve_diagnosis()
         self.assertTrue(diagnosis.is_approved)
         self.assertEqual(diagnosis.approved_doctor_id, self.doctor.id)
+
+    def test_doctor_toggle_active_with_active_visits(self):
+        """Test that doctor cannot be archived with active visits"""
+        # Create a planned visit
+        self.env['hr.hospital.visit'].create({
+            'patient_id': self.patient.id,
+            'doctor_id': self.doctor.id,
+            'planned_datetime': '2025-01-01 10:00:00',
+            'visit_type': 'consultation',
+            'state': 'planned'
+        })
+        # Try to archive the doctor - should raise UserError
+        from odoo.exceptions import UserError
+        with self.assertRaises(UserError):
+            self.doctor.toggle_active()
+        # Doctor should still be active
+        self.assertTrue(self.doctor.active)
+
+    def test_doctor_toggle_active_without_active_visits(self):
+        """Test that doctor can be archived when no active visits"""
+        # Create a completed visit
+        visit = self.env['hr.hospital.visit'].create({
+            'patient_id': self.patient.id,
+            'doctor_id': self.doctor.id,
+            'planned_datetime': '2020-01-01 10:00:00',
+            'visit_type': 'consultation',
+            'state': 'completed'
+        })
+        # Archive the doctor
+        self.doctor.toggle_active()
+        self.assertFalse(self.doctor.active)
+        # Reactivate
+        self.doctor.toggle_active()
+        self.assertTrue(self.doctor.active)
+
+    def test_doctor_action_create_quick_visit_from_doctor(self):
+        """Test action_create_quick_visit_from_doctor method"""
+        result = self.doctor.action_create_quick_visit_from_doctor()
+        # Check action structure
+        self.assertEqual(result['type'], 'ir.actions.act_window')
+        self.assertEqual(result['res_model'], 'hr.hospital.visit')
+        self.assertEqual(result['view_mode'], 'form')
+        self.assertEqual(result['target'], 'new')
+        # Check default values in context
+        context = result['context']
+        self.assertEqual(context['default_doctor_id'], self.doctor.id)
+        self.assertEqual(context['default_visit_type'], 'consultation')
+        self.assertEqual(context['default_state'], 'planned')
+
+    def test_compute_upcoming_visits_count(self):
+        """Test _compute_upcoming_visits_count method"""
+        # Initially no upcoming visits
+        self.doctor._compute_upcoming_visits_count()
+        initial_count = self.doctor.upcoming_visits_count
+        # Create an upcoming planned visit
+        self.env['hr.hospital.visit'].create({
+            'patient_id': self.patient.id,
+            'doctor_id': self.doctor.id,
+            'planned_datetime': '2025-12-31 10:00:00',
+            'visit_type': 'consultation',
+            'state': 'planned'
+        })
+        # Recompute
+        self.doctor._compute_upcoming_visits_count()
+        self.assertEqual(self.doctor.upcoming_visits_count, initial_count + 1)
+
+    def test_visit_get_available_visit_dates(self):
+        """Test get_available_visit_dates method"""
+        # Create doctor schedule for Monday
+        self.env['hr.hospital.doctor.schedule'].create({
+            'doctor_id': self.doctor.id,
+            'day_of_week': '0',  # Monday
+            'start_time': 9.0,
+            'end_time': 17.0,
+            'schedule_type': 'work'
+        })
+        # Test method returns available dates
+        available_dates = self.env['hr.hospital.visit'].get_available_visit_dates(
+            self.doctor.id,
+            days=14
+        )
+        # Should return list
+        self.assertIsInstance(available_dates, list)

@@ -1,8 +1,235 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8"/>
+    <title>Hospital Automation</title>
+</head>
+<body>
 <section class="oe_container">
     <div class="oe_row oe_spaced">
         <div class="oe_span12">
-            <h2>Hospital Automation Module</h2>
-            <p>Complete hospital management system for doctors, patients, diseases and visits.</p>
+            <h1 style="color:#009688;">Hospital Automation System</h1>
+            <h3>Complete Hospital Management Solution</h3>
+            <p class="oe_mt32">
+                Professional hospital management system designed for healthcare institutions. 
+                Manage doctors, patients, visits, diagnoses, and medical records efficiently.
+            </p>
         </div>
     </div>
 </section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Key Features</h2>
+        </div>
+        <div class="oe_span6">
+            <h4>Doctor Management</h4>
+            <ul>
+                <li>Comprehensive doctor profiles with specialties</li>
+                <li>License tracking and validation</li>
+                <li>Intern and mentor relationships</li>
+                <li>Doctor ratings and experience tracking</li>
+                <li>Schedule management</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <h4>Patient Management</h4>
+            <ul>
+                <li>Complete patient records</li>
+                <li>Personal doctor assignment</li>
+                <li>Medical history tracking</li>
+                <li>Blood group and allergy records</li>
+                <li>Emergency contact management</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span6">
+            <h4>Visit Scheduling</h4>
+            <ul>
+                <li>Appointment booking system</li>
+                <li>Visit status tracking (Planned, In Progress, Completed, Cancelled)</li>
+                <li>Automatic doctor availability check</li>
+                <li>Visit history with diagnoses</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <h4>Diagnosis and Disease</h4>
+            <ul>
+                <li>Disease classification with ICD-10 codes</li>
+                <li>Hierarchical disease categories</li>
+                <li>Diagnosis approval workflow</li>
+                <li>Severity level tracking</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Security and Access Control</h2>
+            <p>Role-based access control with 5 user levels:</p>
+        </div>
+        <div class="oe_span12">
+            <table style="width:100%; border-collapse: collapse; margin-top:20px;">
+                <tr style="background-color:#009688; color:white;">
+                    <th style="padding:10px; border:1px solid #ddd;">Role</th>
+                    <th style="padding:10px; border:1px solid #ddd;">Access Level</th>
+                    <th style="padding:10px; border:1px solid #ddd;">Permissions</th>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">Patient</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Own records only</td>
+                    <td style="padding:8px; border:1px solid #ddd;">View own visits and medical history</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">Intern</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Own visits</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Create and manage own patient visits</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">Doctor</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Own plus Intern visits</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Full patient management, diagnoses, prescriptions</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">Manager</td>
+                    <td style="padding:8px; border:1px solid #ddd;">All records</td>
+                    <td style="padding:8px; border:1px solid #ddd;">View all visits, manage doctors, view reports</td>
+                </tr>
+                <tr>
+                    <td style="padding:8px; border:1px solid #ddd;">Administrator</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Full system access</td>
+                    <td style="padding:8px; border:1px solid #ddd;">Complete control including data deletion</td>
+                </tr>
+            </table>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Reporting and Visualization</h2>
+        </div>
+        <div class="oe_span6">
+            <h4>Doctor Reports</h4>
+            <ul>
+                <li>Professional PDF reports for doctors</li>
+                <li>Company logo and contact information</li>
+                <li>Personal and professional details</li>
+                <li>Visit history with diagnoses</li>
+                <li>Patient statistics</li>
+                <li>A4 paper format optimized</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <h4>Kanban Views</h4>
+            <ul>
+                <li>Visual kanban board for doctors</li>
+                <li>Group by specialty</li>
+                <li>Quick visit creation buttons</li>
+                <li>Intern list display for mentors</li>
+                <li>Statistics badges</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Technical Features</h2>
+        </div>
+        <div class="oe_span6">
+            <h4>Localization</h4>
+            <ul>
+                <li>Full Ukrainian translation support</li>
+                <li>Multi-language ready</li>
+                <li>Localized disease classifier</li>
+            </ul>
+        </div>
+        <div class="oe_span6">
+            <h4>Quality Assurance</h4>
+            <ul>
+                <li>Comprehensive test coverage</li>
+                <li>Unit tests for critical methods</li>
+                <li>Constraint validation tests</li>
+                <li>Workflow testing</li>
+            </ul>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Module Structure</h2>
+            <div class="oe_span12">
+                <table style="width:100%; border-collapse: collapse;">
+                    <tr style="background-color:#f5f5f5;">
+                        <th style="padding:10px; border:1px solid #ddd; text-align:left;">Component</th>
+                        <th style="padding:10px; border:1px solid #ddd; text-align:left;">Description</th>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;">Models</td>
+                        <td style="padding:8px; border:1px solid #ddd;">Doctor, Patient, Visit, Diagnosis, Disease, Schedule, Contact Person</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;">Security</td>
+                        <td style="padding:8px; border:1px solid #ddd;">5 user groups with hierarchical permissions, record rules</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;">Reports</td>
+                        <td style="padding:8px; border:1px solid #ddd;">Doctor information report (PDF, A4 format)</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;">Wizards</td>
+                        <td style="padding:8px; border:1px solid #ddd;">Mass doctor reassignment, disease reports, visit rescheduling</td>
+                    </tr>
+                    <tr>
+                        <td style="padding:8px; border:1px solid #ddd;">Views</td>
+                        <td style="padding:8px; border:1px solid #ddd;">List, Form, Kanban, Calendar, Search views</td>
+                    </tr>
+                </table>
+            </div>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container oe_dark">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12">
+            <h2 style="color:#009688;">Installation and Configuration</h2>
+            <ol>
+                <li>Install the module from Apps menu</li>
+                <li>Configure user groups in Settings then Users and Companies</li>
+                <li>Set up company information for reports (logo, address, contacts)</li>
+                <li>Configure disease classifications</li>
+                <li>Create doctor specialties</li>
+                <li>Start managing patients and visits</li>
+            </ol>
+        </div>
+    </div>
+</section>
+
+<section class="oe_container">
+    <div class="oe_row oe_spaced">
+        <div class="oe_span12" style="text-align:center;">
+            <h3 style="color:#009688;">Ready to streamline your hospital operations?</h3>
+            <p class="oe_mt32">
+                Install Hospital Automation now and transform your healthcare management experience.
+            </p>
+            <p style="margin-top:30px; font-size:12px; color:#666;">
+                Version 19.0.2.0.0 | Developed by Kostiantyn Liapkalo | LGPL-3 License
+            </p>
+        </div>
+    </div>
+</section>
+</body>
+</html>

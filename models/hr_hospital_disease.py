@@ -2,6 +2,28 @@
 from odoo import models, fields, api
 from odoo.exceptions import ValidationError
 class HrHospitalDisease(models.Model):
+    """
+    Disease model for hospital management.
+    
+    This model represents diseases in a hierarchical classification system
+    with ICD-10 codes, danger levels, and distribution regions.
+    Supports parent-child relationships for disease categorization.
+    
+    Attributes:
+        name (Char): Disease name (translatable)
+        complete_name (Char): Full hierarchical name (computed)
+        parent_id (Many2one): Parent disease category
+        parent_path (Char): Path for hierarchy computation
+        child_ids (One2many): Child diseases
+        icd10_code (Char): ICD-10 classification code
+        danger_level (Selection): Risk level (low, medium, high, critical)
+        is_infectious (Boolean): Whether disease is contagious
+        symptoms (Text): General symptoms description
+        region_ids (Many2many): Countries where disease is found
+        diagnosis_ids (One2many): Related diagnoses
+        disease_count (Integer): Number of diagnoses (computed)
+        active (Boolean): Archive status
+    """
     _name = 'hr.hospital.disease'
     _description = 'Disease'
     _order = 'complete_name'
@@ -87,6 +109,11 @@ class HrHospitalDisease(models.Model):
     # Full name computation
     @api.depends('name', 'parent_id.complete_name')
     def _compute_complete_name(self):
+        """
+        Compute full hierarchical name of disease.
+        
+        Format: "Parent Name / Disease Name" or just "Disease Name" if no parent.
+        """
         for disease in self:
             if disease.parent_id:
                 disease.complete_name = f"{disease.parent_id.complete_name} / {disease.name}"
@@ -95,20 +122,43 @@ class HrHospitalDisease(models.Model):
     # Diagnoses count computation
     @api.depends('diagnosis_ids')
     def _compute_disease_count(self):
+        """
+        Compute the number of diagnoses for this disease.
+        """
         for disease in self:
             disease.disease_count = len(disease.diagnosis_ids)
     # Display name computation for Odoo 19.0
     @api.depends('complete_name')
     def _compute_display_name(self):
+        """
+        Compute display name for disease.
+        
+        Uses complete_name if available, otherwise falls back to name.
+        """
         for disease in self:
             disease.display_name = disease.complete_name or disease.name
     # Recursion check
     @api.constrains('parent_id')
     def _check_parent_id(self):
+        """
+        Prevent recursive disease hierarchies.
+        
+        Raises:
+            ValidationError: If recursive hierarchy is detected.
+        """
         if not self._check_recursion():
             raise ValidationError(_('You cannot create recursive disease hierarchies.'))
     # Prevent archiving diseases with active diagnoses
     def toggle_active(self):
+        """
+        Override toggle_active to prevent archiving diseases with diagnoses.
+        
+        Raises:
+            ValidationError: If disease has linked diagnoses.
+            
+        Returns:
+            Result of parent toggle_active method.
+        """
         for disease in self:
             active_diagnoses = disease.diagnosis_ids.filtered(
                 lambda d: not d.is_approved or d.is_approved  # Check all active diagnoses

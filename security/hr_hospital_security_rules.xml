@@ -1,0 +1,131 @@
+<?xml version="1.0" encoding="utf-8"?>
+<odoo>
+    <data noupdate="0">
+        <!-- Patient can only see their own visits -->
+        <record id="rule_hr_hospital_visit_patient_own" model="ir.rule">
+            <field name="name">Patient: See Only Own Visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_patient'))]"/>
+            <field name="domain_force">[('patient_id.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Intern can see and edit only their own visits -->
+        <record id="rule_hr_hospital_visit_intern_own" model="ir.rule">
+            <field name="name">Intern: Manage Own Visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_intern'))]"/>
+            <field name="domain_force">[('doctor_id.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Doctor can manage their own visits -->
+        <record id="rule_hr_hospital_visit_doctor_own" model="ir.rule">
+            <field name="name">Doctor: Manage Own Visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_doctor'))]"/>
+            <field name="domain_force">['|', ('doctor_id.user_id', '=', user.id), ('doctor_id.mentor_id.user_id', '=', user.id)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Manager can see all visits -->
+        <record id="rule_hr_hospital_visit_manager_all" model="ir.rule">
+            <field name="name">Manager: See All Visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_manager'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="False"/>
+        </record>
+
+        <!-- Administrator has full access to visits -->
+        <record id="rule_hr_hospital_visit_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Visits</field>
+            <field name="model_id" ref="model_hr_hospital_visit"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <!-- Administrator has full access to all other models -->
+        <record id="rule_hr_hospital_doctor_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Doctors</field>
+            <field name="model_id" ref="model_hr_hospital_doctor"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_hr_hospital_patient_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Patients</field>
+            <field name="model_id" ref="model_hr_hospital_patient"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_hr_hospital_diagnosis_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Diagnoses</field>
+            <field name="model_id" ref="model_hr_hospital_diagnosis"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_hr_hospital_disease_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Diseases</field>
+            <field name="model_id" ref="model_hr_hospital_disease"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_hr_hospital_doctor_schedule_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Doctor Schedules</field>
+            <field name="model_id" ref="model_hr_hospital_doctor_schedule"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+
+        <record id="rule_hr_hospital_contact_person_admin_full" model="ir.rule">
+            <field name="name">Administrator: Full Access to Contact Persons</field>
+            <field name="model_id" ref="model_hr_hospital_contact_person"/>
+            <field name="groups" eval="[(4, ref('group_hr_hospital_administrator'))]"/>
+            <field name="domain_force">[(1, '=', 1)]</field>
+            <field name="perm_read" eval="True"/>
+            <field name="perm_write" eval="True"/>
+            <field name="perm_create" eval="True"/>
+            <field name="perm_unlink" eval="True"/>
+        </record>
+    </data>
+</odoo>

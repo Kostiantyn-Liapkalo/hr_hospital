@@ -8,6 +8,8 @@
     'version': '19.0.2.0.0',
     'depends': ['base', 'contacts', 'mail'],
     'data': [
+        'security/hr_hospital_groups.xml',
+        'security/hr_hospital_security_rules.xml',
         'security/ir.model.access.csv',
         'data/hr_hospital_sequence_data.xml',
         'data/hr_hospital_doctor_speciality_data.xml',

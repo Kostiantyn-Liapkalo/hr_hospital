@@ -4,6 +4,27 @@ from odoo import models, fields, api
 from odoo.exceptions import ValidationError, UserError
 from odoo import _
 class HrHospitalDiagnosis(models.Model):
+    """
+    Medical Diagnosis model for hospital management.
+    
+    This model represents medical diagnoses made during patient visits.
+    It includes diagnosis information, disease reference, severity level,
+    and approval workflow.
+    
+    Attributes:
+        name (Char): Unique diagnosis reference (auto-generated)
+        visit_id (Many2one): Related visit
+        disease_id (Many2one): Diagnosed disease
+        description (Text): Detailed diagnosis description
+        prescribed_treatment (Html): Treatment recommendations
+        is_approved (Boolean): Approval status
+        approved_doctor_id (Many2one): Doctor who approved
+        approval_date (Datetime): When approved
+        severity (Selection): Severity level (mild, moderate, severe, critical)
+        diagnosis_date (Datetime): When examination occurred
+        doctor_id (Many2one): Diagnosing doctor (from visit)
+        patient_id (Many2one): Patient (from visit)
+    """
     _name = 'hr.hospital.diagnosis'
     _description = 'Medical Diagnosis'
     _order = 'diagnosis_date desc'
@@ -76,6 +97,15 @@ class HrHospitalDiagnosis(models.Model):
     )
     # Methods
     def action_approve_diagnosis(self):
+        """
+        Approve the diagnosis.
+        
+        Only non-intern doctors can approve diagnoses.
+        Sets is_approved to True and records approving doctor and date.
+        
+        Raises:
+            UserError: If an intern tries to approve.
+        """
         for diagnosis in self:
             if not diagnosis.is_approved:
                 # Check if doctor can approve (is not an intern)
@@ -87,6 +117,11 @@ class HrHospitalDiagnosis(models.Model):
                     'approval_date': datetime.now()
                 })
     def action_reject_diagnosis(self):
+        """
+        Reject/revoke diagnosis approval.
+        
+        Clears approval status, approving doctor, and approval date.
+        """
         for diagnosis in self:
             if diagnosis.is_approved:
                 diagnosis.write({
@@ -97,6 +132,16 @@ class HrHospitalDiagnosis(models.Model):
     # Constraints
     @api.constrains('diagnosis_date')
     def _check_diagnosis_date(self):
+        """
+        Validate diagnosis date.
+        
+        Must be:
+            - Not in the future
+            - Not earlier than the visit date
+            
+        Raises:
+            ValidationError: If date constraints are violated.
+        """
         for diagnosis in self:
             if diagnosis.diagnosis_date > fields.Datetime.now():
                 raise ValidationError(_('The diagnosis date cannot be in the future.'))
@@ -104,6 +149,12 @@ class HrHospitalDiagnosis(models.Model):
                 raise ValidationError(_('The examination date cannot be earlier than the visit date.'))
     # Method for automatic approval by mentor
     def _auto_approve_by_mentor(self):
+        """
+        Automatically approve diagnosis by the intern's mentor.
+        
+        Called automatically for diagnoses made by interns.
+        Assigns approval to the mentor doctor.
+        """
         for diagnosis in self:
             if not diagnosis.is_approved and diagnosis.doctor_id.is_intern:
                 mentor = diagnosis.doctor_id.mentor_id
